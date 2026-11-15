@@ -23,7 +23,7 @@ packages = ["vsi"]
 include-package-data = true
 
 [tool.setuptools.package-data]
-vsi = ["projects/**/*", "starters/**/*", "starters/**/.gitignore", "templates/*"]
+vsi = ["AGENTS.md", "projects/**/*", "starters/**/*", "starters/**/.gitignore", "templates/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
