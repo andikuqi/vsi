@@ -9,33 +9,67 @@
       "source": "https://optimise.esa.int/challenge/spoc-3-torso-decompositions/About",
       "official_repo": "https://github.com/esa/SpOC3",
       "verified": true,
-      "aliases": ["torso", "tree decomposition", "elimination ordering", "treewidth", "spoc3 torso"],
+      "aliases": [
+        "torso",
+        "tree decomposition",
+        "elimination ordering",
+        "treewidth",
+        "spoc3 torso"
+      ],
       "summary": "Bi-objective graph problem: choose a vertex ordering + threshold t to maximise torso size and minimise torso width (fill-in out-degree). Submit up to 20 vectors, scored by hypervolume.",
-      "starter": "esa"
+      "starter": "esa",
+      "challenge_id": "spoc-3-torso-decompositions",
+      "problem_ids": [
+        "small-graph",
+        "medium-graph",
+        "large-graph"
+      ]
     },
     {
       "slug": "interferometric-mission",
       "title": "Interferometric Mission",
       "kind": "esa",
       "series": "SpOC 3",
-      "source": "https://optimize.esa.int/challenge/spoc-3-interferometric-mission/About",
+      "source": "https://optimise.esa.int/challenge/spoc-3-interferometric-mission/About",
       "official_repo": "https://github.com/esa/SpOC3",
-      "verified": false,
-      "aliases": ["interferometric", "interferometry", "telescope", "spoc3 interferometric"],
-      "summary": "ESA SpOC 3 challenge. Read the source page for the exact problem, data and scoring.",
-      "starter": "esa"
+      "verified": true,
+      "aliases": [
+        "interferometric",
+        "interferometry",
+        "telescope",
+        "spoc3 interferometric"
+      ],
+      "summary": "Choose relative initial position/velocity of N satellites around a mothership so their projections form as many distinct baselines as possible at 3 times (Golomb-like). Single-objective, continuous.",
+      "starter": "esa",
+      "challenge_id": "spoc-3-interferometric-mission",
+      "problem_ids": [
+        "tiny-observatory-in-dro",
+        "large-observatory-in-dro",
+        "large-observatory-in-halo"
+      ]
     },
     {
       "slug": "programmable-cubes",
       "title": "Programmable Cubes",
       "kind": "esa",
       "series": "SpOC 3",
-      "source": "https://optimize.esa.int/challenge/spoc-3-programmable-cubes/About",
+      "source": "https://optimise.esa.int/challenge/spoc-3-programmable-cubes/About",
       "official_repo": "https://github.com/esa/SpOC3",
-      "verified": false,
-      "aliases": ["cubes", "programmable matter", "reconfiguration", "spoc3 cubes"],
-      "summary": "ESA SpOC 3 challenge. Read the source page for the exact problem, data and scoring.",
-      "starter": "esa"
+      "verified": true,
+      "aliases": [
+        "cubes",
+        "programmable matter",
+        "reconfiguration",
+        "spoc3 cubes"
+      ],
+      "summary": "Reconfigure an ensemble of cubes into a target spacecraft (ISS, JWST, Enterprise) with a short sequence of legal pivot moves. Combinatorial planning.",
+      "starter": "esa",
+      "challenge_id": "spoc-3-programmable-cubes",
+      "problem_ids": [
+        "iss",
+        "jwst",
+        "enterprise"
+      ]
     },
     {
       "slug": "luna-tomato-logistics",
@@ -43,11 +77,22 @@
       "kind": "esa",
       "series": "SpOC 4",
       "source": "https://optimise.esa.int/challenge/spoc-4-luna-tomato-logistics/About",
-      "official_repo": null,
-      "verified": false,
-      "aliases": ["luna logistics", "tomato logistics", "lunar logistics", "spoc4 logistics"],
-      "summary": "ESA SpOC 4 challenge. Read the source page for the exact problem, data and scoring.",
-      "starter": "esa"
+      "official_repo": "https://github.com/esa/SpOC4",
+      "verified": true,
+      "aliases": [
+        "luna logistics",
+        "tomato logistics",
+        "lunar logistics",
+        "spoc4 logistics"
+      ],
+      "summary": "Maximum-weight 3-dimensional matching of Earth orbit -> Moon orbit -> destination transfers (NP-hard), plus an advanced trajectory-design version.",
+      "starter": "esa",
+      "challenge_id": "spoc-4-luna-tomato-logistics",
+      "problem_ids": [
+        "matching-i",
+        "matching-ii",
+        "trajectory-matching"
+      ]
     },
     {
       "slug": "luna-tomato-advertising",
@@ -55,11 +100,19 @@
       "kind": "esa",
       "series": "SpOC 4",
       "source": "https://optimise.esa.int/challenge/spoc-4-luna-tomato-advertising/About",
-      "official_repo": null,
-      "verified": false,
-      "aliases": ["luna advertising", "tomato advertising", "spoc4 advertising"],
-      "summary": "ESA SpOC 4 challenge. Read the source page for the exact problem, data and scoring.",
-      "starter": "esa"
+      "official_repo": "https://github.com/esa/SpOC4",
+      "verified": true,
+      "aliases": [
+        "luna advertising",
+        "tomato advertising",
+        "spoc4 advertising"
+      ],
+      "summary": "Select orbits and phases for spacecraft whose lunar occultations reproduce a Morse-code signal (MSE <= 0.05) with as few spacecraft as possible.",
+      "starter": "esa",
+      "challenge_id": "spoc-4-luna-tomato-advertising",
+      "problem_ids": [
+        "tie-breaker"
+      ]
     },
     {
       "slug": "keplerian-tomato-tsp",
@@ -67,71 +120,126 @@
       "kind": "esa",
       "series": "SpOC 4",
       "source": "https://optimise.esa.int/challenge/spoc-4-keplerian-tomato-traveling-salesperson/About",
-      "official_repo": null,
-      "verified": false,
-      "aliases": ["keplerian", "tomato tsp", "traveling salesperson", "orbital tsp", "spoc4 tsp"],
-      "summary": "ESA SpOC 4 challenge (TSP-like tour with orbital mechanics). Read the source page for the exact problem, data and scoring.",
-      "starter": "esa"
+      "official_repo": "https://github.com/esa/SpOC4",
+      "verified": true,
+      "aliases": [
+        "keplerian",
+        "tomato tsp",
+        "traveling salesperson",
+        "orbital tsp",
+        "spoc4 tsp"
+      ],
+      "summary": "Time-dependent TSP around the Moon: visit all tomato orbits with Lambert transfers under a delta-v limit, minimising total mission time.",
+      "starter": "esa",
+      "challenge_id": "spoc-4-keplerian-tomato-traveling-salesperson",
+      "problem_ids": [
+        "small",
+        "medium",
+        "large"
+      ]
     },
     {
       "slug": "morphing-rovers",
       "title": "Morphing Rovers",
       "kind": "esa",
       "series": "SpOC 2",
-      "source": "https://optimize.esa.int/challenge/spoc-2-morphing-rovers/About",
-      "official_repo": null,
-      "verified": false,
-      "aliases": ["rovers", "morphing", "rover", "spoc2 rovers"],
-      "summary": "ESA SpOC 2 challenge. Read the source page for the exact problem, data and scoring.",
-      "starter": "esa"
+      "source": "https://optimise.esa.int/challenge/spoc-2-morphing-rovers/About",
+      "official_repo": "https://github.com/esa/SpOC2",
+      "verified": true,
+      "aliases": [
+        "rovers",
+        "morphing",
+        "rover",
+        "spoc2 rovers"
+      ],
+      "summary": "Design 4 rover terrain masks + a neural-network controller (19 133 parameters) so rovers reach 30 samples on 6 Mars maps as fast as possible.",
+      "starter": "esa",
+      "challenge_id": "spoc-2-morphing-rovers",
+      "problem_ids": [
+        "morphing-rovers"
+      ]
     },
     {
       "slug": "quantum-communications-constellations",
       "title": "Quantum Communications Constellations",
       "kind": "esa",
       "series": "SpOC 2",
-      "source": "https://optimize.esa.int/challenge/spoc-2-quantum-communications-constellations/About",
-      "official_repo": null,
-      "verified": false,
-      "aliases": ["quantum", "constellations", "satellites", "qkd", "spoc2 quantum"],
-      "summary": "ESA SpOC 2 challenge. Read the source page for the exact problem, data and scoring.",
-      "starter": "esa"
+      "source": "https://optimise.esa.int/challenge/spoc-2-quantum-communications-constellations/About",
+      "official_repo": "https://github.com/esa/SpOC2",
+      "verified": true,
+      "aliases": [
+        "quantum",
+        "constellations",
+        "satellites",
+        "qkd",
+        "spoc2 quantum"
+      ],
+      "summary": "Bi-objective: design two Walker constellations + choose 4 rover sites to minimise quantum-link cost and constellation cost; scored by hypervolume.",
+      "starter": "esa",
+      "challenge_id": "spoc-2-quantum-communications-constellations",
+      "problem_ids": [
+        "quantum-communications-constellations"
+      ]
     },
     {
       "slug": "trappist-tour",
       "title": "Trappist Tour",
       "kind": "esa",
-      "series": "SpOC 1",
-      "source": "https://optimize.esa.int/challenge/spoc-trappist-tour/About",
+      "series": "SpOC 1 (GECCO 2022)",
+      "source": "https://optimise.esa.int/challenge/spoc-trappist-tour/About",
       "official_repo": null,
-      "verified": false,
-      "aliases": ["trappist", "trappist-1", "tour", "spoc trappist"],
-      "summary": "ESA SpOC (1) challenge. Read the source page for the exact problem, data and scoring.",
-      "starter": "esa"
+      "verified": true,
+      "aliases": [
+        "trappist",
+        "trappist-1",
+        "tour",
+        "spoc trappist"
+      ],
+      "summary": "Bi-objective trajectory: visit all 7 TRAPPIST-1 planets once, minimising total delta-v and mission time; scored by hypervolume.",
+      "starter": "esa",
+      "challenge_id": "spoc-trappist-tour",
+      "problem_ids": [
+        "trappist-tour"
+      ]
     },
     {
       "slug": "delivery-scheduling",
       "title": "Delivery Scheduling",
       "kind": "esa",
-      "series": "SpOC 1",
-      "source": "https://optimize.esa.int/challenge/spoc-delivery-scheduling/About",
+      "series": "SpOC 1 (GECCO 2022)",
+      "source": "https://optimise.esa.int/challenge/spoc-delivery-scheduling/About",
       "official_repo": null,
-      "verified": false,
-      "aliases": ["delivery", "scheduling", "spoc delivery"],
-      "summary": "ESA SpOC (1) challenge. Read the source page for the exact problem, data and scoring.",
-      "starter": "esa"
+      "verified": true,
+      "aliases": [
+        "delivery",
+        "scheduling",
+        "spoc delivery"
+      ],
+      "summary": "Purely combinatorial: assign 340 asteroids to 12 stations with non-overlapping activity windows to maximise the minimum delivered mass.",
+      "starter": "esa",
+      "challenge_id": "spoc-delivery-scheduling",
+      "problem_ids": [
+        "delivery-scheduling"
+      ]
     },
     {
       "slug": "mining",
       "title": "Mining",
       "kind": "esa",
-      "series": "SpOC 1",
-      "source": "https://optimize.esa.int/challenge/spoc-mining/About",
+      "series": "SpOC 1 (GECCO 2022)",
+      "source": "https://optimise.esa.int/challenge/spoc-mining/About",
       "official_repo": null,
-      "verified": false,
-      "aliases": ["asteroid mining", "spoc mining"],
-      "summary": "ESA SpOC (1) challenge. Read the source page for the exact problem, data and scoring.",
-      "starter": "esa"
+      "verified": true,
+      "aliases": [
+        "asteroid mining",
+        "spoc mining"
+      ],
+      "summary": "Route a ship through a 10 000-asteroid belt for 1 827 days with limited propellant, maximising the scarcest of three prepared materials.",
+      "starter": "esa",
+      "challenge_id": "spoc-mining",
+      "problem_ids": [
+        "mine-the-belt"
+      ]
     },
     {
       "slug": "trigger-arc-tsp",
@@ -141,7 +249,11 @@
       "source": null,
       "official_repo": null,
       "verified": false,
-      "aliases": ["trigger arc", "tatsp", "trigger tsp"],
+      "aliases": [
+        "trigger arc",
+        "tatsp",
+        "trigger tsp"
+      ],
       "summary": "TSP variant where traversing some arcs (triggers) changes the cost of other arcs. The assignment gave no link: ask the professor for the official problem statement and instances.",
       "starter": "generic"
     },
@@ -153,7 +265,14 @@
       "source": "professor brief (see PROBLEM.md)",
       "official_repo": null,
       "verified": true,
-      "aliases": ["dna", "genome", "assembly", "sequencing reads", "overlap graph", "k-mer"],
+      "aliases": [
+        "dna",
+        "genome",
+        "assembly",
+        "sequencing reads",
+        "overlap graph",
+        "k-mer"
+      ],
       "summary": "Reconstruct a DNA sequence from short noisy reads: k-mer indexing, approximate overlaps, overlap graph, assembly, error correction, variant detection, scalability.",
       "starter": "dna"
     },
@@ -165,7 +284,13 @@
       "source": "professor brief (see PROBLEM.md)",
       "official_repo": null,
       "verified": true,
-      "aliases": ["protein", "folding", "amino acid", "hp model", "structure prediction"],
+      "aliases": [
+        "protein",
+        "folding",
+        "amino acid",
+        "hp model",
+        "structure prediction"
+      ],
       "summary": "Fold an amino-acid sequence on a 2D/3D lattice minimising an energy function; at least two search algorithms (GA, SA, beam, B&B…), search-space reduction, local improvement, experiments.",
       "starter": "protein"
     },
@@ -177,7 +302,14 @@
       "source": "professor brief (see PROBLEM.md)",
       "official_repo": null,
       "verified": true,
-      "aliases": ["chronos", "nexus", "galaxy", "interstellar", "civilization", "planets"],
+      "aliases": [
+        "chronos",
+        "nexus",
+        "galaxy",
+        "interstellar",
+        "civilization",
+        "planets"
+      ],
       "summary": "Dynamic galaxy graph: multi-objective routing, resource allocation (flow), mission scheduling, infrastructure (knapsack), dynamic re-planning, prediction, uncertainty; ≥3 techniques; report as GitHub README.",
       "starter": "chronos"
     },
@@ -189,7 +321,14 @@
       "source": "professor brief (see PROBLEM.md)",
       "official_repo": null,
       "verified": true,
-      "aliases": ["robots", "multi-robot", "reinforcement learning", "marl", "ppo", "rrt"],
+      "aliases": [
+        "robots",
+        "multi-robot",
+        "reinforcement learning",
+        "marl",
+        "ppo",
+        "rrt"
+      ],
       "summary": "Robots on a dynamic grid: multi-agent RL (MADQL/PPO), online path planning (A*/RRT*), auction-based task allocation, priority handling, simulation with moving obstacles.",
       "starter": "robots"
     },
@@ -201,7 +340,13 @@
       "source": "professor brief (see PROBLEM.md)",
       "official_repo": null,
       "verified": true,
-      "aliases": ["time travel", "paradox", "timeline", "causal", "cycles"],
+      "aliases": [
+        "time travel",
+        "paradox",
+        "timeline",
+        "causal",
+        "cycles"
+      ],
       "summary": "Events as a directed graph with time-travel back edges: detect causal cycles (DFS/SCC/topological sort), identify paradoxes, find a minimum-cost repair, compare approaches.",
       "starter": "timetravel"
     },
@@ -213,7 +358,15 @@
       "source": "professor brief (see PROBLEM.md)",
       "official_repo": null,
       "verified": true,
-      "aliases": ["traffic", "city grid", "dijkstra", "a*", "astar", "routing", "congestion"],
+      "aliases": [
+        "traffic",
+        "city grid",
+        "dijkstra",
+        "a*",
+        "astar",
+        "routing",
+        "congestion"
+      ],
       "summary": "Weighted city grid with traffic delays: Dijkstra and A* fastest routes, dynamic edge-weight updates from congestion data.",
       "starter": "traffic"
     }

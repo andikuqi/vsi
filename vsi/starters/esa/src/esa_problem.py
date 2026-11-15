@@ -18,8 +18,8 @@ from vsi.esa import load_module
 
 ROOT = Path(__file__).resolve().parent.parent
 
-CHALLENGE = "{slug_esa}"          # id used in submission files
-PROBLEM_IDS = []                  # TODO: e.g. ["easy", "medium", "hard"] — see the challenge page
+CHALLENGE = "{challenge_id}"      # id used in submission files (see docs/PROBLEM.md)
+PROBLEM_IDS = {problem_ids}      # official problem ids (docs/PROBLEM.md)
 UDP_FILE = ROOT / "official" / "TODO_path_to_udp.py"
 UDP_CLASS = "TODO_ClassName"
 UDP_ARGS: dict = {}

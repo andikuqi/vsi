@@ -72,3 +72,13 @@ def test_force_keeps_the_students_existing_files(tmp_path):
     assert (tmp_path / "README.md").read_text(encoding="utf-8") == "my own readme"
     assert (tmp_path / ".gitignore").read_text(encoding="utf-8") == "secret.txt"
     assert (tmp_path / "tasks.py").exists() and (tmp_path / "AGENTS.md").exists()
+
+
+@pytest.mark.parametrize("p", [p for p in catalog.load() if p["kind"] == "esa"], ids=lambda p: p["slug"])
+def test_esa_projects_are_verified_and_wired(p, tmp_path):
+    assert p["verified"] and p["challenge_id"] and p["problem_ids"]
+    target = catalog.scaffold(p["slug"], tmp_path / p["slug"])
+    src = (target / "src" / "esa_problem.py").read_text(encoding="utf-8")
+    assert f'CHALLENGE = "{p["challenge_id"]}"' in src
+    assert all(f'"{pid}"' in src for pid in p["problem_ids"])
+    assert "TODO (first task)" not in (target / "docs" / "PROBLEM.md").read_text(encoding="utf-8")

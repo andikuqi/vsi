@@ -31,19 +31,41 @@ That's it. The agent finds your project, creates the files, runs the tests and t
 
 ## 📚 Projects / Projektet
 
-| ESA challenges / Sfidat ESA | Professor briefs / Detyrat e profesorit |
-|---|---|
-| Torso Decompositions | DNA Genome Reconstruction |
-| Interferometric Mission | Protein Structure Prediction |
-| Programmable Cubes | Chronos Nexus |
-| Luna Tomato Logistics | Multi-Robot Coordination |
-| Luna Tomato Advertising | Time Travel Paradox |
-| Keplerian Tomato Traveling Salesperson | Traffic Flow (Dijkstra & A*) |
-| Morphing Rovers | The Trigger Arc TSP |
-| Quantum Communications Constellations | |
-| Trappist Tour | |
-| Delivery Scheduling | |
-| Mining | |
+| ESA challenges / Sfidat ESA | | Professor briefs / Detyrat e profesorit | |
+|---|:-:|---|:-:|
+| Torso Decompositions | ✅ | DNA Genome Reconstruction | ✅ |
+| Interferometric Mission | ✅ | Protein Structure Prediction | ✅ |
+| Programmable Cubes | ✅ | Chronos Nexus | ✅ |
+| Luna Tomato Logistics | ✅ | Multi-Robot Coordination | ✅ |
+| Luna Tomato Advertising | ✅ | Time Travel Paradox | ✅ |
+| Keplerian Tomato Traveling Salesperson | ✅ | Traffic Flow (Dijkstra & A*) | ✅ |
+| Morphing Rovers | ✅ | The Trigger Arc TSP | ⚠️ |
+| Quantum Communications Constellations | ✅ | | |
+| Trappist Tour | ✅ | | |
+| Delivery Scheduling | ✅ | | |
+| Mining | ✅ | | |
+
+---
+
+## 🗂️ Your project after setup / Projekti yt pas përgatitjes
+
+```
+your-project/
+├── vsi/                  📦 the folder you copied (don't edit) / folderi që kopjove (mos e ndrysho)
+├── AGENTS.md                 🤖 instructions for your AI agent / udhëzime për agjentin
+├── docs/
+│   ├── PROBLEM.md            📄 the problem / problemi
+│   ├── REQUIREMENTS.md       ☑️ checklist / lista e kërkesave
+│   └── PLAN.md  DECISIONS.md
+├── src/
+│   ├── algorithms.py         ✍️ YOUR ALGORITHMS / ALGORITMET E TUA
+│   ├── generator.py          🎲 test data / të dhënat (ESA: esa_problem.py)
+│   └── run.py                ▶️ runs everything / ekzekuton gjithçka
+├── tests/                    🧪 tests / testet
+├── results/                  📊 tables + charts / tabela + grafikë
+├── tasks.py                  ⚙️ commands (the agent uses them) / komandat (i përdor agjenti)
+└── README.md                 📝 your report / raporti yt
+```
 
 ---
 
@@ -54,5 +76,10 @@ That's it. The agent finds your project, creates the files, runs the tests and t
 | Skedarët e tu nuk fshihen dhe nuk ndryshohen. | Your own files are never deleted or changed. |
 | Mos e ndrysho folderin `vsi`. | Don't edit the `vsi` folder. |
 | VSI të jep bazën, jo zgjidhjen. Algoritmin e bën ti, dhe duhet ta kuptosh. | VSI gives you the base, not the solution. The algorithm is yours, and you must understand it. |
+
+| Mark | 🇦🇱 | 🇬🇧 |
+|:-:|---|---|
+| ✅ | Problemi është kontrolluar nga burimi zyrtar. Gati për punë. | Problem checked against the official source. Ready to work. |
+| ⚠️ | Problemi nuk është kontrolluar ende. Agjenti duhet ta lexojë fillimisht faqen zyrtare (ose pyete profesorin). | Problem not checked yet. Your agent must read the official page first (or ask your professor). |
 
 License: MIT

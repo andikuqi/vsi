@@ -67,7 +67,9 @@ def _render(text: str, project: dict) -> str:
                            "open it in a browser) and replace PROBLEM.md and REQUIREMENTS.md with the real spec.\n")
     for key, value in {"title": project["title"], "slug": project["slug"],
                        "source": project.get("source") or "not provided — ask the professor",
-                       "kind_notes": kind_notes, "slug_esa": project["slug"]}.items():
+                       "kind_notes": kind_notes, "slug_esa": project["slug"],
+                       "challenge_id": project.get("challenge_id") or project["slug"],
+                       "problem_ids": json.dumps(project.get("problem_ids") or [])}.items():
         text = text.replace(f"[[{key}]]", value).replace("{" + key + "}", value)
     return text
 
