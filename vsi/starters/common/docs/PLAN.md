@@ -1,6 +1,6 @@
 # Plan (milestones)
 
-1. **Setup** — `python tasks.py setup`, `python tasks.py test`, `python tasks.py run` (pipeline works end to end).
+1. **Setup** — `python tasks.py start` (data, tests, first run, charts, report, progress in one go).
 2. **Understand** — read docs/PROBLEM.md; solve a tiny instance by hand.
 3. **Model & evaluator** — data structures + a function that checks validity and scores a solution, with tests.
 4. **Baseline** — simplest correct algorithm; it is the bar to beat.

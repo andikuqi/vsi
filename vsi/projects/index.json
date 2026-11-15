@@ -23,6 +23,11 @@
         "small-graph",
         "medium-graph",
         "large-graph"
+      ],
+      "data": [
+        "https://api.optimize.esa.int/data/spoc3/torso/easy.gr",
+        "https://api.optimize.esa.int/data/spoc3/torso/medium.gr",
+        "https://api.optimize.esa.int/data/spoc3/torso/hard.gr"
       ]
     },
     {
@@ -92,6 +97,13 @@
         "matching-i",
         "matching-ii",
         "trajectory-matching"
+      ],
+      "data": [
+        "https://api.optimize.esa.int/data/spoc4/ltl/random_harder_5000.txt",
+        "https://api.optimize.esa.int/data/spoc4/ltl/random_hard_10000.txt",
+        "https://api.optimize.esa.int/data/spoc4/ltl/Earth_orbits.txt",
+        "https://api.optimize.esa.int/data/spoc4/ltl/Moon_orbits.txt",
+        "https://api.optimize.esa.int/data/spoc4/ltl/LTL.txt"
       ]
     },
     {
@@ -136,6 +148,11 @@
         "small",
         "medium",
         "large"
+      ],
+      "data": [
+        "https://api.optimize.esa.int/data/spoc4/kttsp/problems/easy.kttsp",
+        "https://api.optimize.esa.int/data/spoc4/kttsp/problems/medium.kttsp",
+        "https://api.optimize.esa.int/data/spoc4/kttsp/problems/hard.kttsp"
       ]
     },
     {
@@ -157,6 +174,33 @@
       "challenge_id": "spoc-2-morphing-rovers",
       "problem_ids": [
         "morphing-rovers"
+      ],
+      "data": [
+        "https://api.optimize.esa.int/data/spoc2/morphing/coordinates.txt",
+        {
+          "url": "https://api.optimize.esa.int/data/spoc2/morphing/Maps/Map1.jpg",
+          "file": "spoc2/morphing/Maps/Map1.JPG"
+        },
+        {
+          "url": "https://api.optimize.esa.int/data/spoc2/morphing/Maps/Map2.jpg",
+          "file": "spoc2/morphing/Maps/Map2.JPG"
+        },
+        {
+          "url": "https://api.optimize.esa.int/data/spoc2/morphing/Maps/Map3.jpg",
+          "file": "spoc2/morphing/Maps/Map3.JPG"
+        },
+        {
+          "url": "https://api.optimize.esa.int/data/spoc2/morphing/Maps/Map4.jpg",
+          "file": "spoc2/morphing/Maps/Map4.JPG"
+        },
+        {
+          "url": "https://api.optimize.esa.int/data/spoc2/morphing/Maps/Map5.jpg",
+          "file": "spoc2/morphing/Maps/Map5.JPG"
+        },
+        {
+          "url": "https://api.optimize.esa.int/data/spoc2/morphing/Maps/Map6.jpg",
+          "file": "spoc2/morphing/Maps/Map6.JPG"
+        }
       ]
     },
     {
@@ -179,6 +223,9 @@
       "challenge_id": "spoc-2-quantum-communications-constellations",
       "problem_ids": [
         "quantum-communications-constellations"
+      ],
+      "data": [
+        "https://api.optimize.esa.int/data/spoc2/constellations/rovers.txt"
       ]
     },
     {
@@ -220,6 +267,9 @@
       "challenge_id": "spoc-delivery-scheduling",
       "problem_ids": [
         "delivery-scheduling"
+      ],
+      "data": [
+        "https://api.optimize.esa.int/data/spoc/scheduling/candidates.txt"
       ]
     },
     {
@@ -239,6 +289,9 @@
       "challenge_id": "spoc-mining",
       "problem_ids": [
         "mine-the-belt"
+      ],
+      "data": [
+        "https://api.optimize.esa.int/data/spoc/mining/candidates.txt"
       ]
     },
     {

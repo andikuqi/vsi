@@ -26,7 +26,7 @@ Vertices are `0 … n-1`. Three instances:
 4. **Width:** the maximum out-degree (counting fill edges) of any vertex in the torso.
 
 Worked example (from the official page) — edges `0-1 0-2 1-6 2-8 3-8 3-9 4-5 4-6 4-7`,
-`x = [0,1,2,4,5,3,6,8,9,7, 6]` → torso `[6,8,9,7]`, size 4, width 2. (Pinned in `tests/test_evaluate.py`.)
+`x = [0,1,2,4,5,3,6,8,9,7, 6]` → torso `[6,8,9,7]`, size 4, width 2 — use it as the first test of your evaluator.
 
 ## Objectives (bi-objective)
 - **Maximise torso size** ⇔ minimise `t`.
@@ -46,7 +46,7 @@ worse solutions are scored as width 501.
   }
 ]
 ```
-`src/torso/submission.py` writes this file. For final scoring, verify with the official UDP from `esa/SpOC3`.
+`vsi.esa.write_submission` writes this file. For final scoring, verify with the official UDP from `esa/SpOC3`.
 
 ## Why it is hard
 Choosing the ordering is equivalent to choosing an elimination ordering; minimising the width of an

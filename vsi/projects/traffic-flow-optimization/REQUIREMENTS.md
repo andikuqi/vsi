@@ -1,7 +1,7 @@
 # Requirements checklist
 
 ## Implementation
-- [ ] City grid generator / loader (sizes small → large)
+- [ ] City grid generator / loader (sizes small → large) <!-- auto:data -->
 - [ ] Dijkstra (own implementation, priority queue)
 - [ ] A* with admissible heuristic
 - [ ] Dynamic edge-weight updates from congestion data

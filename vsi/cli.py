@@ -26,6 +26,11 @@ def _line(p: dict) -> str:
 
 
 def main(argv=None) -> int:
+    for stream in (sys.stdout, sys.stderr):  # progress bars / ✅ on Windows terminals and agent logs
+        try:
+            stream.reconfigure(encoding="utf-8")
+        except (AttributeError, ValueError):
+            pass
     parser = argparse.ArgumentParser(prog="vsi", description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -58,7 +63,7 @@ def main(argv=None) -> int:
         p = catalog.get(args.slug)
         target = catalog.scaffold(p["slug"], args.dir or p["slug"], force=args.force)
         print(f"Created {p['title']} in {target.resolve()}\nNext:\n  cd {target}\n"
-              "  python tasks.py setup\n  python tasks.py test\n  python tasks.py run\n"
+              "  python tasks.py start\n"
               "Then open the folder in VS Code and let your AI agent read AGENTS.md.")
     elif args.cmd == "agents":
         for path in catalog.write_agent_files(Path(args.dir), catalog.get(args.slug)):

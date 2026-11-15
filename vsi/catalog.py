@@ -154,8 +154,18 @@ def scaffold(slug: str, target: str | Path, force: bool = False) -> Path:
             (docs / name).write_text(text, encoding="utf-8")
 
     write_agent_files(target, project)
+    write_manifest(target, project)
     bundle_library(target)
     return target
+
+
+def write_manifest(target: Path, project: dict) -> Path:
+    """vsi.json: what tasks.py needs to know about the project (kind, ids, official data files)."""
+    keys = ("slug", "title", "kind", "source", "summary", "challenge_id", "problem_ids", "data")
+    path = Path(target) / "vsi.json"
+    path.write_text(json.dumps({k: project[k] for k in keys if project.get(k) is not None}, indent=2,
+                               ensure_ascii=False) + "\n", encoding="utf-8")
+    return path
 
 
 def bundle_library(target: Path) -> Path:

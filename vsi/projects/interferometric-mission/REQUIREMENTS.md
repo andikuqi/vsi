@@ -9,7 +9,7 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 - [ ] Official example / sample solution evaluates to the expected value (test)
 
 ## Algorithms
-- [ ] Baseline (random search) runs end to end with the official fitness
+- [ ] Baseline (random search) runs end to end with the official fitness <!-- auto:baseline -->
 - [ ] Constructive heuristic (e.g. place satellites on a Golomb-ruler / Costas-array pattern)
 - [ ] Improvement method (local search / simulated annealing / CMA-ES / GA)
 - [ ] Strategy for keeping the pattern after 1 and 2 periods (velocity choice)
@@ -21,7 +21,7 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 - [ ] Why the problem is hard / why heuristics are used
 
 ## Experiments
-- [ ] Metrics recorded: fitness, runtime, peak memory, fitness evaluations
+- [ ] Metrics recorded: fitness, runtime, peak memory, fitness evaluations <!-- auto:metrics -->
 - [ ] Results on every problem instance
 - [ ] Algorithm comparison table
 - [ ] Convergence plot (best fitness over time) per problem

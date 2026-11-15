@@ -9,7 +9,7 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 - [ ] Official example / sample solution evaluates to the expected value (test)
 
 ## Algorithms
-- [ ] Baseline (random search) runs end to end with the official fitness
+- [ ] Baseline (random search) runs end to end with the official fitness <!-- auto:baseline -->
 - [ ] Greedy constructive planner (move one cube at a time towards a free target cell)
 - [ ] Path search for a single cube (BFS / A* over legal pivot moves)
 - [ ] Improvement method (remove redundant moves, local search / beam search on the sequence)
@@ -21,7 +21,7 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 - [ ] Why the problem is hard / why heuristics are used
 
 ## Experiments
-- [ ] Metrics recorded: fitness, runtime, peak memory, fitness evaluations
+- [ ] Metrics recorded: fitness, runtime, peak memory, fitness evaluations <!-- auto:metrics -->
 - [ ] Results on every problem instance
 - [ ] Algorithm comparison table
 - [ ] Convergence plot (best fitness over time) per problem

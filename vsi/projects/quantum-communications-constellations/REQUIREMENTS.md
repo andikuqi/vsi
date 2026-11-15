@@ -4,12 +4,13 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 
 ## Problem & data
 - [x] Problem statement copied from the official page (docs/PROBLEM.md)
+- [ ] Official data files downloaded (`python tasks.py data`) <!-- auto:data -->
 - [ ] Official UDP downloaded, rovers.txt in place, UDP wired in src/esa_problem.py
 - [ ] udp.example() evaluates; own Pareto filter + hypervolume (ref [1.2, 1.4]) match pygmo on a test set
 - [ ] Official example / sample solution evaluates to the expected value (test)
 
 ## Algorithms
-- [ ] Baseline (random search) runs end to end with the official fitness
+- [ ] Baseline (random search) runs end to end with the official fitness <!-- auto:baseline -->
 - [ ] Rover-site selection respecting the 3 000 km constraint (greedy / exhaustive on a shortlist)
 - [ ] Multi-objective method (NSGA-II / MOEA/D or weighted-sum sweep)
 - [ ] Sweep of integer Walker parameters (S, P, F) with continuous optimisation of the orbits
@@ -22,7 +23,7 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 - [ ] Why the problem is hard / why heuristics are used
 
 ## Experiments
-- [ ] Metrics recorded: fitness, runtime, peak memory, fitness evaluations
+- [ ] Metrics recorded: fitness, runtime, peak memory, fitness evaluations <!-- auto:metrics -->
 - [ ] Results on every problem instance
 - [ ] Algorithm comparison table
 - [ ] Pareto front plot + hypervolume per problem

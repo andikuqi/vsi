@@ -2,7 +2,7 @@
 
 ## Implementation
 - [ ] Timeline graph model (events, attributes, dependencies, time-travel edges)
-- [ ] Generator / input parser for timelines of increasing size
+- [ ] Generator / input parser for timelines of increasing size <!-- auto:data -->
 - [ ] Cycle / contradiction detection (DFS, SCC, topological sort)
 - [ ] Paradox explanation: events + responsible dependency
 - [ ] Repair operations with costs

@@ -1,7 +1,7 @@
 # Requirements checklist
 
 ## Implementation
-- [ ] Read simulator / dataset loader (small, medium, large)
+- [ ] Read simulator / dataset loader (small, medium, large) <!-- auto:data -->
 - [ ] Indexing technique (k-mer hash / suffix array / inverted index) for candidate pairs
 - [ ] Approximate overlap detection (edit distance / banded alignment)
 - [ ] Overlap graph construction with edge weights

@@ -14,12 +14,14 @@ the student's own algorithms are the point of the project.
 
 ## Commands (run from the project root)
 ```
+python tasks.py start      everything at once (data, tests, first run, charts, report, progress) — run it first
 python tasks.py setup      install dependencies
 python tasks.py data       download official data (if any)
 python tasks.py test       run tests — must stay green
 python tasks.py run        run all algorithms on all instances -> results/metrics.csv
 python tasks.py plots      charts -> results/*.png
-python tasks.py check      requirements progress (reads docs/REQUIREMENTS.md)
+python tasks.py report     refresh the automatic report blocks (status, results table, charts)
+python tasks.py check      progress + next step (reads docs/REQUIREMENTS.md)
 python tasks.py context    CONTEXT.md bundle for chat-only AIs
 ```
 
@@ -29,6 +31,13 @@ python tasks.py context    CONTEXT.md bundle for chat-only AIs
 - `from vsi.pareto import pareto_filter, hypervolume, select_best` — two minimised objectives.
 - `from vsi.esa import load_module, write_submission` — ESA SpOC challenges.
 - `src/generator.py` (custom projects) — instance generator with sizes in `SIZES`.
+
+## When the student asks "what now?" / "çfarë bëj tash?"
+1. Run `python tasks.py check` and take the **next step** it prints (first open requirement).
+2. Propose it in 2–3 simple sentences: what it is, why it matters for the grade, how long it takes. Ask to start.
+3. After finishing a step: `python tasks.py test`, tick the requirement, `python tasks.py report`,
+   then tell the student the new progress and the next step.
+Reply in the student's language (often Albanian). Assume they may be a beginner.
 
 ## Where code goes
 - `src/algorithms.py` (or `src/<package>/algorithms/`) — one function per algorithm, registered in `ALGORITHMS`.

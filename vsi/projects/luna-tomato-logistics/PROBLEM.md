@@ -11,8 +11,8 @@ with every orbit and destination used at most once.
 ## Problems
 | Problem id | Level | Dimension | Data |
 |---|---|---|---|
-| `matching-i` | Beginner | 25 000 | `https://api.optimize.esa.int/data/spoc4/ltl/random_harder_5000.txt` or `random_hard_10000.txt` (check: dimension = number of lines) |
-| `matching-ii` | Beginner | 92 103 | the other of the two files above |
+| `matching-i` | Beginner | 25 000 | `https://api.optimize.esa.int/data/spoc4/ltl/random_harder_5000.txt` (25 000 transfers) |
+| `matching-ii` | Beginner | 92 103 | `https://api.optimize.esa.int/data/spoc4/ltl/random_hard_10000.txt` (92 103 transfers) |
 | `trajectory-matching` | Advanced | 8 400 | `https://api.optimize.esa.int/data/spoc4/ltl/Earth_orbits.txt`, `Moon_orbits.txt`, `LTL.txt` |
 
 ## Beginner problems: weighted 3-dimensional matching

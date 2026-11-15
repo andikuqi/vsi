@@ -4,12 +4,13 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 
 ## Problem & data
 - [x] Problem statement copied from the official page (docs/PROBLEM.md)
+- [ ] Official data files downloaded (`python tasks.py data`) <!-- auto:data -->
 - [ ] Instance parser for .kttsp files + official TomatoProblem utilities (pykep 2.x) working
 - [ ] Own feasibility checker (permutation, timing, ΔV limits, exception count) tested on sample tours
 - [ ] Official example / sample solution evaluates to the expected value (test)
 
 ## Algorithms
-- [ ] Baseline (random search) runs end to end with the official fitness
+- [ ] Baseline (random search) runs end to end with the official fitness <!-- auto:baseline -->
 - [ ] Constructive heuristic (time-dependent nearest neighbour / beam search)
 - [ ] Improvement method (2-opt / or-opt with re-timing, simulated annealing)
 - [ ] Timing optimisation for a fixed order (departure time / time of flight search)
@@ -21,7 +22,7 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 - [ ] Why the problem is hard / why heuristics are used
 
 ## Experiments
-- [ ] Metrics recorded: fitness, runtime, peak memory, fitness evaluations
+- [ ] Metrics recorded: fitness, runtime, peak memory, fitness evaluations <!-- auto:metrics -->
 - [ ] Results on every problem instance
 - [ ] Algorithm comparison table
 - [ ] Convergence plot (best fitness over time) per problem

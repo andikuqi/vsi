@@ -4,12 +4,13 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 
 ## Problem & data
 - [x] Problem statement copied from the official page (docs/PROBLEM.md)
+- [ ] Official data files downloaded (`python tasks.py data`) <!-- auto:data -->
 - [ ] candidates.txt downloaded and parsed, official UDP wired in src/esa_problem.py
 - [ ] Own evaluator (M_min + all constraints) equals udp.fitness on udp.example() and random solutions
 - [ ] Official example / sample solution evaluates to the expected value (test)
 
 ## Algorithms
-- [ ] Baseline (random search) runs end to end with the official fitness
+- [ ] Baseline (random search) runs end to end with the official fitness <!-- auto:baseline -->
 - [ ] Greedy constructive (assign to the poorest station/material within windows)
 - [ ] Window / station-order optimisation
 - [ ] Improvement method (move / swap local search, simulated annealing or tabu)
@@ -22,7 +23,7 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 - [ ] Why the problem is hard / why heuristics are used
 
 ## Experiments
-- [ ] Metrics recorded: fitness, runtime, peak memory, fitness evaluations
+- [ ] Metrics recorded: fitness, runtime, peak memory, fitness evaluations <!-- auto:metrics -->
 - [ ] Results on every problem instance
 - [ ] Algorithm comparison table
 - [ ] Convergence plot (best fitness over time) per problem

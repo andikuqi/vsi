@@ -13,7 +13,7 @@
 
 > Lexo vsi/AGENTS.md dhe përgatit projektin tim: **[emri i projektit tënd]**
 
-Kaq. Agjenti e gjen projektin, krijon skedarët, teston dhe të tregon hapin tjetër.
+Kaq. Agjenti e gjen projektin, krijon skedarët, shkarkon të dhënat, teston, bën grafikët e parë, e nis raportin dhe të tregon progresin dhe hapin tjetër.
 
 ---
 
@@ -25,7 +25,7 @@ Kaq. Agjenti e gjen projektin, krijon skedarët, teston dhe të tregon hapin tje
 
 > Read vsi/AGENTS.md and set up my project: **[your project name]**
 
-That's it. The agent finds your project, creates the files, runs the tests and tells you the next step.
+That's it. The agent finds your project, creates the files, downloads the data, runs the tests, makes the first charts, starts your report and shows your progress and the next step.
 
 ---
 
@@ -62,7 +62,9 @@ your-project/
 │   ├── generator.py          🎲 test data / të dhënat (ESA: esa_problem.py)
 │   └── run.py                ▶️ runs everything / ekzekuton gjithçka
 ├── tests/                    🧪 tests / testet
+├── data/                     🎲 official data (downloaded) / të dhënat zyrtare (të shkarkuara)
 ├── results/                  📊 tables + charts / tabela + grafikë
+├── vsi.json              🧾 project info + data links / info e projektit + linqet e të dhënave
 ├── tasks.py                  ⚙️ commands (the agent uses them) / komandat (i përdor agjenti)
 └── README.md                 📝 your report / raporti yt
 ```

@@ -1,15 +1,16 @@
 # {title}
 
-Algorithm Design & Analysis project, built with [VSI](https://github.com/) scaffolding.
+Algorithm Design & Analysis project, built with [VSI](https://github.com/andikuqi/vsi).
 Problem statement: [docs/PROBLEM.md](docs/PROBLEM.md) · Source: {source}
+
+<!-- vsi:status:start -->
+_Run `python tasks.py start` to fill this in._
+<!-- vsi:status:end -->
 
 ## Quick start
 ```
-python tasks.py setup
-python tasks.py test
-python tasks.py run
-python tasks.py plots
-python tasks.py check
+python tasks.py start     # everything at once: data, tests, baseline, charts, report, progress
+python tasks.py check     # progress + next step
 ```
 
 ## Report
@@ -31,7 +32,10 @@ python tasks.py check
 <!-- Machine, sizes, seeds, time budget, metrics. -->
 
 ### 7. Results
-<!-- Tables from results/metrics.csv and charts from results/*.png -->
+<!-- The block below is filled automatically by `python tasks.py report` (or `start`). Write your analysis after it. -->
+<!-- vsi:results:start -->
+_No results yet: run `python tasks.py start`._
+<!-- vsi:results:end -->
 
 ### 8. Comparison & scalability (theory vs measured)
 

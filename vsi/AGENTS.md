@@ -12,9 +12,10 @@ Run from the student's project root (the folder that contains `vsi/`):
 2. Add the project files: `python -m vsi new <slug> . --force`
    - The student's existing files are never overwritten.
    - This creates `AGENTS.md` in the project root: **from now on follow that file**.
-3. `python tasks.py setup` then `python tasks.py test` (must pass).
-4. Tell the student, in a few short sentences, what was created and what the next step is
-   (read `docs/PROBLEM.md`, then the first algorithm).
+3. `python tasks.py start` — installs packages, downloads the official data, runs the tests and a first run,
+   makes charts, ticks what VSI can verify, fills the report and prints progress + the next step.
+4. Show the student that summary (the ✅ lines and the progress bar) and explain, in a few short sentences,
+   what is ready and what the next step is. Then offer to do that step with them.
 
 ## Rules
 - Do not edit anything inside `vsi/` — it is a library. Import from it (`from vsi.measure import Meter`, …).

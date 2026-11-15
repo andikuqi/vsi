@@ -67,15 +67,16 @@ def pareto_fronts(json_path: Path = RESULTS / "fronts.json", x: str = "f1", y: s
 
 
 def numeric_metrics(csv_path: Path = RESULTS / "metrics.csv") -> list[str]:
-    """All columns of metrics.csv that contain numbers in every row."""
+    """Columns of metrics.csv that contain numbers in every row and are not all zero (nothing to chart)."""
     rows = list(csv.DictReader(csv_path.open()))
     out = []
     for col in rows[0] if rows else []:
         if col in ("instance", "algorithm"):
             continue
         try:
-            [float(r[col]) for r in rows]
-            out.append(col)
+            values = [float(r[col]) for r in rows]
+            if any(values):
+                out.append(col)
         except (TypeError, ValueError):
             pass
     return out

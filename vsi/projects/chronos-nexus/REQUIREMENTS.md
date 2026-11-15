@@ -2,7 +2,7 @@
 
 ## Model & data
 - [ ] Galaxy graph with all route / planet / ship / mission / infrastructure attributes
-- [ ] Dataset generator: small, medium, large, extreme
+- [ ] Dataset generator: small, medium, large, extreme <!-- auto:data -->
 - [ ] Dynamic event stream
 
 ## Algorithms (≥ 3 different techniques, ≥ 1 own design)

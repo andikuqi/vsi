@@ -9,7 +9,7 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 - [ ] Official example / sample solution evaluates to the expected value (test)
 
 ## Algorithms
-- [ ] Baseline (random search) runs end to end with the official fitness
+- [ ] Baseline (random search) runs end to end with the official fitness <!-- auto:baseline -->
 - [ ] Order selection (enumerate the 5 040 sequences with a cheap estimate, or a permutation GA)
 - [ ] Continuous optimiser for a fixed order (DE / CMA-ES / multi-start local search)
 - [ ] Multi-objective method (NSGA-II, or weighted sum / ε-constraint sweep)
@@ -22,7 +22,7 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 - [ ] Why the problem is hard / why heuristics are used
 
 ## Experiments
-- [ ] Metrics recorded: fitness, runtime, peak memory, fitness evaluations
+- [ ] Metrics recorded: fitness, runtime, peak memory, fitness evaluations <!-- auto:metrics -->
 - [ ] Results on every problem instance
 - [ ] Algorithm comparison table
 - [ ] Pareto front plot + hypervolume per problem
