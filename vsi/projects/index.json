@@ -28,6 +28,18 @@
         "https://api.optimize.esa.int/data/spoc3/torso/easy.gr",
         "https://api.optimize.esa.int/data/spoc3/torso/medium.gr",
         "https://api.optimize.esa.int/data/spoc3/torso/hard.gr"
+      ],
+      "udp": {
+        "small-graph": "https://api.optimize.esa.int/media/problems/spoc-3-torso-decompositions-small-graph-1711380312223.py",
+        "medium-graph": "https://api.optimize.esa.int/media/problems/spoc-3-torso-decompositions-medium-graph-1711380328535.py",
+        "large-graph": "https://api.optimize.esa.int/media/problems/spoc-3-torso-decompositions-large-graph-1711380341869.py"
+      },
+      "requires": [
+        "numpy",
+        "matplotlib",
+        "torch",
+        "loguru",
+        "pygmo"
       ]
     },
     {
@@ -51,6 +63,19 @@
         "tiny-observatory-in-dro",
         "large-observatory-in-dro",
         "large-observatory-in-halo"
+      ],
+      "udp": {
+        "tiny-observatory-in-dro": "https://api.optimize.esa.int/media/problems/spoc-3-interferometric-mission-tiny-observatory-in-dro-1711466574922.py",
+        "large-observatory-in-dro": "https://api.optimize.esa.int/media/problems/spoc-3-interferometric-mission-large-observatory-in-dro-1711466585914.py",
+        "large-observatory-in-halo": "https://api.optimize.esa.int/media/problems/spoc-3-interferometric-mission-large-observatory-in-halo-1711466594360.py"
+      },
+      "requires": [
+        "heyoka==3.2.0",
+        "pygmo",
+        "numpy",
+        "scipy",
+        "pillow",
+        "matplotlib"
       ]
     },
     {
@@ -74,6 +99,34 @@
         "iss",
         "jwst",
         "enterprise"
+      ],
+      "udp": {
+        "iss": "https://api.optimize.esa.int/media/problems/spoc-3-programmable-cubes-iss-1737044022682.py",
+        "jwst": "https://api.optimize.esa.int/media/problems/spoc-3-programmable-cubes-jwst-1737044036375.py",
+        "enterprise": "https://api.optimize.esa.int/media/problems/spoc-3-programmable-cubes-enterprise-1737043826459.py"
+      },
+      "requires": [
+        "numba",
+        "numpy",
+        "matplotlib"
+      ],
+      "data": [
+        "https://api.optimize.esa.int/data/spoc3/cubes/CubeMoveset.py",
+        "https://api.optimize.esa.int/data/spoc3/cubes/problems/ISS.json",
+        "https://api.optimize.esa.int/data/spoc3/cubes/problems/JWST.json",
+        "https://api.optimize.esa.int/data/spoc3/cubes/problems/Enterprise.json",
+        "https://api.optimize.esa.int/data/spoc3/cubes/data/ISS/Initial_Config.npy",
+        "https://api.optimize.esa.int/data/spoc3/cubes/data/ISS/Initial_Cube_Types.npy",
+        "https://api.optimize.esa.int/data/spoc3/cubes/data/ISS/Target_Config.npy",
+        "https://api.optimize.esa.int/data/spoc3/cubes/data/ISS/Target_Cube_Types.npy",
+        "https://api.optimize.esa.int/data/spoc3/cubes/data/JWST/Initial_Config.npy",
+        "https://api.optimize.esa.int/data/spoc3/cubes/data/JWST/Initial_Cube_Types.npy",
+        "https://api.optimize.esa.int/data/spoc3/cubes/data/JWST/Target_Config.npy",
+        "https://api.optimize.esa.int/data/spoc3/cubes/data/JWST/Target_Cube_Types.npy",
+        "https://api.optimize.esa.int/data/spoc3/cubes/data/Enterprise/Initial_Config.npy",
+        "https://api.optimize.esa.int/data/spoc3/cubes/data/Enterprise/Initial_Cube_Types.npy",
+        "https://api.optimize.esa.int/data/spoc3/cubes/data/Enterprise/Target_Config.npy",
+        "https://api.optimize.esa.int/data/spoc3/cubes/data/Enterprise/Target_Cube_Types.npy"
       ]
     },
     {
@@ -104,6 +157,16 @@
         "https://api.optimize.esa.int/data/spoc4/ltl/Earth_orbits.txt",
         "https://api.optimize.esa.int/data/spoc4/ltl/Moon_orbits.txt",
         "https://api.optimize.esa.int/data/spoc4/ltl/LTL.txt"
+      ],
+      "udp": {
+        "matching-i": "https://api.optimize.esa.int/media/problems/spoc-4-luna-tomato-logistics-matching-i-1774534213771.py",
+        "matching-ii": "https://api.optimize.esa.int/media/problems/spoc-4-luna-tomato-logistics-matching-ii-1774534892574.py",
+        "trajectory-matching": "https://api.optimize.esa.int/media/problems/spoc-4-luna-tomato-logistics-trajectory-matching-1776442888561.py"
+      },
+      "requires": [
+        "numpy",
+        "pykep",
+        "heyoka"
       ]
     },
     {
@@ -124,6 +187,14 @@
       "challenge_id": "spoc-4-luna-tomato-advertising",
       "problem_ids": [
         "tie-breaker"
+      ],
+      "udp": {
+        "tie-breaker": "https://api.optimize.esa.int/media/problems/spoc-4-luna-tomato-advertising-tie-breaker-1774861966944.py"
+      },
+      "requires": [
+        "numpy",
+        "heyoka",
+        "matplotlib"
       ]
     },
     {
@@ -153,6 +224,16 @@
         "https://api.optimize.esa.int/data/spoc4/kttsp/problems/easy.kttsp",
         "https://api.optimize.esa.int/data/spoc4/kttsp/problems/medium.kttsp",
         "https://api.optimize.esa.int/data/spoc4/kttsp/problems/hard.kttsp"
+      ],
+      "udp": {
+        "small": "https://api.optimize.esa.int/media/problems/spoc-4-keplerian-tomato-traveling-salesperson-small-1782203910047.py",
+        "medium": "https://api.optimize.esa.int/media/problems/spoc-4-keplerian-tomato-traveling-salesperson-medium-1782203984713.py",
+        "large": "https://api.optimize.esa.int/media/problems/spoc-4-keplerian-tomato-traveling-salesperson-large-1782204009564.py"
+      },
+      "requires": [
+        "numpy",
+        "pykep<3",
+        "matplotlib"
       ]
     },
     {
@@ -201,6 +282,16 @@
           "url": "https://api.optimize.esa.int/data/spoc2/morphing/Maps/Map6.jpg",
           "file": "spoc2/morphing/Maps/Map6.JPG"
         }
+      ],
+      "udp": {
+        "morphing-rovers": "https://api.optimize.esa.int/media/problems/spoc-2-morphing-rovers-morphing-rovers-1681397490623.py"
+      },
+      "requires": [
+        "numpy",
+        "imageio",
+        "torch",
+        "torchvision",
+        "matplotlib"
       ]
     },
     {
@@ -226,6 +317,19 @@
       ],
       "data": [
         "https://api.optimize.esa.int/data/spoc2/constellations/rovers.txt"
+      ],
+      "udp": {
+        "quantum-communications-constellations": "https://api.optimize.esa.int/media/problems/spoc-2-quantum-communications-constellations-quantum-communications-constellatio_BpXhIVq.py"
+      },
+      "requires": [
+        "pykep",
+        "pygmo",
+        "numpy",
+        "scipy",
+        "matplotlib",
+        "seaborn",
+        "sgp4",
+        "networkx"
       ]
     },
     {
@@ -247,6 +351,15 @@
       "challenge_id": "spoc-trappist-tour",
       "problem_ids": [
         "trappist-tour"
+      ],
+      "udp": {
+        "trappist-tour": "https://api.optimize.esa.int/media/problems/spoc-trappist-tour-trappist-tour-1679042673855.py"
+      },
+      "requires": [
+        "numpy",
+        "pykep",
+        "pygmo",
+        "matplotlib"
       ]
     },
     {
@@ -270,6 +383,13 @@
       ],
       "data": [
         "https://api.optimize.esa.int/data/spoc/scheduling/candidates.txt"
+      ],
+      "udp": {
+        "delivery-scheduling": "https://api.optimize.esa.int/media/problems/spoc-delivery-scheduling-delivery-scheduling-1679475416464.py"
+      },
+      "requires": [
+        "numpy",
+        "matplotlib"
       ]
     },
     {
@@ -292,6 +412,13 @@
       ],
       "data": [
         "https://api.optimize.esa.int/data/spoc/mining/candidates.txt"
+      ],
+      "udp": {
+        "mine-the-belt": "https://api.optimize.esa.int/media/problems/spoc-mining-mine-the-belt-1679404403080.py"
+      },
+      "requires": [
+        "numpy",
+        "pykep"
       ]
     },
     {

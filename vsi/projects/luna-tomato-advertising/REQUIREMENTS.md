@@ -4,7 +4,8 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 
 ## Problem & data
 - [x] Problem statement copied from the official page (docs/PROBLEM.md)
-- [ ] Official repo cloned, UDP wired in src/esa_problem.py, target signal generated
+- [ ] Official data + evaluation code downloaded and wired (`python tasks.py data`) <!-- auto:data -->
+- [ ] Official packages installed (heyoka) and the target Morse signal generated
 - [ ] Own signal reconstruction / MSE matches udp.fitness on sample solutions
 - [ ] Official example / sample solution evaluates to the expected value (test)
 

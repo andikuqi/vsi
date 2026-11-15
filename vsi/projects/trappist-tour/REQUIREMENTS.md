@@ -4,7 +4,8 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 
 ## Problem & data
 - [x] Problem statement copied from the official page (docs/PROBLEM.md)
-- [ ] Official UDP downloaded from the problem page and wired in src/esa_problem.py (pykep installed)
+- [ ] Official data + evaluation code downloaded and wired (`python tasks.py data`) <!-- auto:data -->
+- [ ] Official packages installed (pykep, pygmo) and udp.example() evaluates
 - [ ] udp.example() evaluates; own Pareto filter + hypervolume (ref [2500, 4000]) tested
 - [ ] Official example / sample solution evaluates to the expected value (test)
 

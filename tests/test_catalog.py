@@ -86,14 +86,21 @@ def test_esa_projects_are_verified_and_wired(p, tmp_path):
 
 @pytest.mark.parametrize("slug", [p["slug"] for p in catalog.load()])
 def test_start_runs_on_every_project(slug, tmp_path):
-    """`tasks.py start` end to end, offline: official data URLs are swapped for a local file."""
+    """`tasks.py start` end to end, offline: official data / evaluation-code URLs are swapped for local fakes
+    (a tiny UDP with the official interface), and no packages are installed."""
     import json
     target = catalog.scaffold(slug, tmp_path / slug)
     man_path = target / "vsi.json"
     man = json.loads(man_path.read_text(encoding="utf-8"))
     fake = tmp_path / "fake_data.txt"
     fake.write_text("1 1 1 1.0\n", encoding="utf-8")
+    fake_udp = tmp_path / "fake_udp.py"
+    fake_udp.write_text("class P:\n    def fitness(self, x):\n        return [sum(x), -sum(x)]\n"
+                        "    def get_nobj(self):\n        return 2\n"
+                        "    def get_bounds(self):\n        return ([0.0] * 3, [1.0] * 3)\nudp = P()\n", encoding="utf-8")
     man["data"] = [{"url": fake.as_uri(), "file": f"file{i}.txt"} for i, _ in enumerate(man.get("data", []))]
+    man["udp"] = {pid: fake_udp.as_uri() for pid in man.get("udp", {})}
+    man["requires"] = []
     man_path.write_text(json.dumps(man), encoding="utf-8")
 
     res = subprocess.run([sys.executable, "tasks.py", "start"], cwd=target, capture_output=True, text=True,
@@ -109,8 +116,14 @@ def test_start_runs_on_every_project(slug, tmp_path):
         assert all((target / "data" / f"file{i}.txt").exists() for i in range(len(man["data"])))
     # every "data" requirement VSI can verify is ticked (downloaded files / working generator)
     assert not any(line.startswith("- [ ]") and "auto:data" in line for line in req.splitlines()), req
-    if p_kind(slug) == "custom":
-        assert list((target / "docs" / "figures").glob("*.png")), out
+    figures = {p.name for p in (target / "docs" / "figures").glob("*.png")}
+    assert "scaling_evaluated.png" in figures, (figures, out)
+    if p_kind(slug) == "esa":
+        assert "OFFICIAL fitness on" in out, out
+        assert all((target / "official" / f"{pid}.py").exists() for pid in man["problem_ids"])
+        assert any(f.startswith("front_") for f in figures), figures          # 2 objectives -> Pareto chart
+        assert "auto:baseline" not in req or not any(
+            line.startswith("- [ ]") and "auto:baseline" in line for line in req.splitlines()), req
 
 
 def p_kind(slug):
@@ -142,3 +155,37 @@ def test_report_goes_to_docs_when_readme_is_the_students(tmp_path):
     assert (tmp_path / "README.md").read_text(encoding="utf-8") == "my own readme"
     report.update(tmp_path)  # running twice keeps one copy of each block
     assert out.read_text(encoding="utf-8").count("vsi:results:start") == 1
+
+
+def test_bootstrap_agents_file_is_replaced_but_students_files_are_kept(tmp_path):
+    from pathlib import Path
+    bootstrap = (Path(catalog.PKG).parent / "AGENTS.md").read_text(encoding="utf-8")
+    (tmp_path / "AGENTS.md").write_text(bootstrap, encoding="utf-8")
+    (tmp_path / "CLAUDE.md").write_text("# my own notes\n", encoding="utf-8")
+    catalog.scaffold("traffic-flow-optimization", tmp_path, force=True)
+    agents = (tmp_path / "AGENTS.md").read_text(encoding="utf-8")
+    assert "vsi:bootstrap" not in agents and "Traffic Flow" in agents
+    claude = (tmp_path / "CLAUDE.md").read_text(encoding="utf-8")
+    assert claude.startswith("# my own notes") and "@AGENTS.md" in claude
+    catalog.scaffold("traffic-flow-optimization", tmp_path, force=True)    # second run: block refreshed, not duplicated
+    assert (tmp_path / "CLAUDE.md").read_text(encoding="utf-8").count("vsi:agents:start") == 1
+
+
+def test_experiment_writes_convergence_and_fronts(tmp_path, monkeypatch):
+    import json
+    from vsi import plots
+    from vsi.experiment import run_experiments
+    monkeypatch.chdir(tmp_path)
+
+    def algo(inst, meter):
+        for v in (5, 3, 1):
+            meter.count()
+            meter.record(v)
+        return v
+
+    run_experiments({"a": algo}, {"small": 1, "large": 2},
+                    lambda name, inst, res: {"cost": res, "_front": [[1, 3], [2, 1]]})
+    assert (tmp_path / "results" / "history.csv").exists()
+    assert "small/a" in json.loads((tmp_path / "results" / "fronts.json").read_text())
+    names = {p.name for p in plots.main()}
+    assert {"scaling_evaluated.png", "quality_cost.png", "convergence_small.png", "front_large.png"} <= names

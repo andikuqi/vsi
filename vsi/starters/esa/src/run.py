@@ -16,10 +16,18 @@ def main(argv=None) -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--budget", type=float, default=10.0, help="seconds per optimiser per problem")
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--problems", nargs="*", default=PROBLEM_IDS, choices=PROBLEM_IDS)
     args = parser.parse_args(argv)
 
-    problems = PROBLEM_IDS or [None]
-    instances = {str(p): load_udp(p) for p in problems}
+    instances = {}
+    for p in args.problems:          # a problem whose official code cannot load is skipped, not fatal
+        try:
+            instances[p] = load_udp(p)
+        except (ImportError, SystemExit) as exc:
+            print(f"skipping {p}: {exc}")
+    if not instances:
+        raise SystemExit("No official problem could be loaded: run `python tasks.py data` and install "
+                         "requirements-official.txt.")
 
     def wrap(name, algo):
         def run(udp, meter):
@@ -33,7 +41,9 @@ def main(argv=None) -> None:
         if inst_name != "None":
             write_submission(CHALLENGE, inst_name, vectors[0] if len(vectors) == 1 else vectors,
                              f"results/submission_{inst_name}.json")
-        return {"fitness": min(fits)}
+        if len(fits[0]) >= 2 and getattr(udp, "get_nobj", lambda: 1)() >= 2:   # multi-objective
+            return {"fitness": min(f[0] for f in fits), "solutions": len(vectors), "_front": [f[:2] for f in fits]}
+        return {"fitness": min(fits)[0]}
 
     run_experiments({name: wrap(name, algo) for name, algo in ALGORITHMS.items()}, instances, score)
 

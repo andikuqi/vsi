@@ -4,8 +4,8 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 
 ## Problem & data
 - [x] Problem statement copied from the official page (docs/PROBLEM.md)
-- [ ] Official data files downloaded (`python tasks.py data`) <!-- auto:data -->
-- [ ] Official repo cloned, maps + coordinates downloaded, UDP wired in src/esa_problem.py
+- [ ] Official data + evaluation code downloaded and wired (`python tasks.py data`) <!-- auto:data -->
+- [ ] Official packages installed (torch, torchvision, imageio) and udp.example() evaluates
 - [ ] udp.example() evaluates and the result is reproduced by our run script
 - [ ] Official example / sample solution evaluates to the expected value (test)
 

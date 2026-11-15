@@ -4,8 +4,8 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 
 ## Problem & data
 - [x] Problem statement copied from the official page (docs/PROBLEM.md)
-- [ ] Official data files downloaded (`python tasks.py data`) <!-- auto:data -->
-- [ ] candidates.txt downloaded and parsed, official UDP wired in src/esa_problem.py
+- [ ] Official data + evaluation code downloaded and wired (`python tasks.py data`) <!-- auto:data -->
+- [ ] Own loader for candidates.txt into our data structures (asteroid -> station -> opportunities)
 - [ ] Own evaluator (M_min + all constraints) equals udp.fitness on udp.example() and random solutions
 - [ ] Official example / sample solution evaluates to the expected value (test)
 

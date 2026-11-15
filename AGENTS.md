@@ -1,26 +1,20 @@
-# VSI — instructions for AI agents
+<!-- vsi:bootstrap -->
+# This project uses VSI
 
-VSI is a library + project catalog for Algorithm Design & Analysis projects.
+Instructions for AI agents (Codex, Copilot, Gemini, Claude, Cursor, …). Read them before doing anything else.
 
-## If a student asks you to start or set up their project
-No install needed: copy the `vsi/` folder into the student's project and use `python -m vsi ...`
-(or `vsi ...` if it was pip-installed).
-1. Find it: `python -m vsi find <words from the project title>` (catalog: `vsi/projects/index.json`).
-2. Scaffold it inside the student's repo: `python -m vsi new <slug> . --force` (existing files are kept),
-   or a new folder: `python -m vsi new <slug> <folder>` (the library is bundled into it as `vsi/`).
-3. Go into the folder and follow **its** `AGENTS.md` (commands, rules, definition of done).
-4. If the project is marked "spec not verified", first read the source page and replace `docs/PROBLEM.md`
-   and `docs/REQUIREMENTS.md` with the real specification.
+The `vsi/` folder in this project is **VSI**: a library + catalog that sets up Algorithm Design & Analysis
+projects (problem statement, requirements, data, tests, experiments, charts, report).
 
-## Layout of this repo
-- `vsi/measure.py, experiment.py, plots.py, check.py, pareto.py, esa.py, context.py` — reusable helpers.
-- `vsi/projects/index.json` — every known project: slug, title, source links, aliases, starter.
-- `vsi/projects/<slug>/` — PROBLEM.md + REQUIREMENTS.md per project.
-- `vsi/starters/` — `common` (all projects), `generic` (custom briefs), `esa` (ESA challenges),
-  and project-specific starters (`dna`, `protein`, `chronos`, `robots`, `timetravel`, `traffic`).
-- `vsi/templates/` — AGENTS.md template (rendered for Codex, Copilot, Gemini, Claude, Cursor) and prompt playbook.
+## If the project is not set up yet (there is no `tasks.py` next to this file)
+When the student says anything like "start", "fillo puno", "set up my project", "help me with my project":
+1. Read `vsi/AGENTS.md` and follow its **Setup** steps (find the project, `python -m vsi new <slug> . --force`,
+   `python tasks.py start`). If you do not know the project title, ask the student for it.
+2. Setup replaces this file with the project's own instructions. From then on, follow the new `AGENTS.md`.
 
-## Working on VSI itself
-- `python -m pytest` must pass. Adding a project = add an entry to `index.json` (+ docs folder / starter if available)
-  and a test in `tests/test_catalog.py` that scaffolds it.
-- Starters give infrastructure (data, evaluation, measuring), never a finished solution to the assignment.
+## If the project is already set up (`tasks.py` exists)
+Follow the instructions in this file's replacement; if you still see this text, run
+`python -m vsi agents <slug> .` (slug in `vsi.json`) to regenerate them.
+
+---
+_Working on the VSI repository itself (it has `tests/test_catalog.py`)? See CONTRIBUTING.md._

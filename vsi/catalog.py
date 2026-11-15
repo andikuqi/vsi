@@ -153,6 +153,12 @@ def scaffold(slug: str, target: str | Path, force: bool = False) -> Path:
         if (docs / name).resolve() not in keep:
             (docs / name).write_text(text, encoding="utf-8")
 
+    if project.get("requires") and (target / "requirements-official.txt").resolve() not in keep:
+        (target / "requirements-official.txt").write_text(
+            "# Packages needed by the official ESA evaluation code (official/*.py).\n"
+            "# pykep / pygmo / heyoka install most easily with conda + Python 3.11:\n"
+            "#   conda install -c conda-forge pykep pygmo heyoka\n" + "\n".join(project["requires"]) + "\n",
+            encoding="utf-8")
     write_agent_files(target, project)
     write_manifest(target, project)
     bundle_library(target)
@@ -161,7 +167,7 @@ def scaffold(slug: str, target: str | Path, force: bool = False) -> Path:
 
 def write_manifest(target: Path, project: dict) -> Path:
     """vsi.json: what tasks.py needs to know about the project (kind, ids, official data files)."""
-    keys = ("slug", "title", "kind", "source", "summary", "challenge_id", "problem_ids", "data")
+    keys = ("slug", "title", "kind", "source", "summary", "challenge_id", "problem_ids", "data", "udp", "requires")
     path = Path(target) / "vsi.json"
     path.write_text(json.dumps({k: project[k] for k in keys if project.get(k) is not None}, indent=2,
                                ensure_ascii=False) + "\n", encoding="utf-8")
@@ -180,19 +186,36 @@ def bundle_library(target: Path) -> Path:
     return dest
 
 
+GENERATED = "<!-- vsi:generated -->"
+BOOTSTRAP = "<!-- vsi:bootstrap -->"
+BLOCK = ("<!-- vsi:agents:start -->", "<!-- vsi:agents:end -->")
+
+
 def write_agent_files(target: Path, project: dict) -> list[Path]:
-    """Write the same instructions in the file each AI tool reads automatically."""
+    """Write the same instructions in the file each AI tool reads automatically.
+
+    A file VSI wrote (or the bootstrap AGENTS.md shipped with the vsi folder) is replaced.
+    A file the student wrote is kept: the VSI instructions are added in a marked block at its end
+    (and that block is refreshed on later runs).
+    """
     body = _render((TEMPLATES / "AGENTS.md").read_text(encoding="utf-8"), project)
     written = []
     for rel, style in AGENT_FILES.items():
         path = Path(target) / rel
         path.parent.mkdir(parents=True, exist_ok=True)
-        if style == "claude":
-            text = "@AGENTS.md\n"
-        elif style == "cursor":
-            text = f"---\ndescription: VSI project rules\nalwaysApply: true\n---\n\n{body}"
+        content = "@AGENTS.md\n" if style == "claude" else body
+        if style == "cursor":
+            ours = f"---\ndescription: VSI project rules\nalwaysApply: true\n---\n{GENERATED}\n\n{body}"
         else:
-            text = body
+            ours = f"{GENERATED}\n{content}"
+        existing = path.read_text(encoding="utf-8") if path.exists() else None
+        if existing is None or GENERATED in existing or BOOTSTRAP in existing:
+            text = ours
+        else:
+            block = f"{BLOCK[0]}\n{content.rstrip()}\n{BLOCK[1]}"
+            pattern = re.compile(re.escape(BLOCK[0]) + r".*?" + re.escape(BLOCK[1]), re.S)
+            text = pattern.sub(lambda _: block, existing) if pattern.search(existing) \
+                else existing.rstrip() + "\n\n" + block + "\n"
         path.write_text(text, encoding="utf-8")
         written.append(path)
     return written

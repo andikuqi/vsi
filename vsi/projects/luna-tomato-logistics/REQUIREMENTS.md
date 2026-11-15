@@ -4,8 +4,8 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 
 ## Problem & data
 - [x] Problem statement copied from the official page (docs/PROBLEM.md)
-- [ ] Official data files downloaded (`python tasks.py data`) <!-- auto:data -->
-- [ ] Instance files downloaded and parsed (e l d weight), validity checker written
+- [ ] Official data + evaluation code downloaded and wired (`python tasks.py data`) <!-- auto:data -->
+- [ ] Own instance parser (e l d weight) + validity checker written
 - [ ] Own fitness = official fitness on sample solutions (including invalid → 0)
 - [ ] Official example / sample solution evaluates to the expected value (test)
 

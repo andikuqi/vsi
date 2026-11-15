@@ -4,8 +4,8 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 
 ## Problem & data
 - [x] Problem statement copied from the official page (docs/PROBLEM.md)
-- [ ] Official data files downloaded (`python tasks.py data`) <!-- auto:data -->
-- [ ] candidates.txt downloaded, official UDP wired in src/esa_problem.py (pykep installed)
+- [ ] Official data + evaluation code downloaded and wired (`python tasks.py data`) <!-- auto:data -->
+- [ ] Own loader for candidates.txt + pykep installed for transfer costs
 - [ ] The official example chain scores J = 0.58; own route simulator (propellant, mass, time) matches udp.pretty
 - [ ] Official example / sample solution evaluates to the expected value (test)
 

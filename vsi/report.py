@@ -69,6 +69,8 @@ def status_block(root: Path) -> str:
 
 def copy_figures(root: Path) -> list[Path]:
     out = root / "docs" / "figures"
+    for old in out.glob("*.png"):   # keep docs/figures in sync with the latest run
+        old.unlink()
     copied = []
     for png in sorted((root / "results").glob("*.png")):
         out.mkdir(parents=True, exist_ok=True)

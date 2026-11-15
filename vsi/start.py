@@ -1,13 +1,16 @@
 """`python tasks.py start`: take a fresh project as far as VSI can, in one command.
 
-Steps: packages -> data -> tests -> first run -> charts -> requirement ticks -> report -> progress + next step.
+Steps: packages -> data + official code -> official packages -> tests -> first run -> charts
+       -> requirement ticks -> report -> progress + next step.
 Every step reports ✅ done, ⏭ skipped (with the reason) or ⚠️ problem, and never stops the others.
 """
 
 from __future__ import annotations
 
+import contextlib
 import importlib
 import importlib.util
+import io
 import subprocess
 import sys
 from pathlib import Path
@@ -32,14 +35,16 @@ def _packages(root: Path) -> None:
 
 
 def _data(root: Path, man: dict) -> None:
-    if man.get("data"):
+    if man.get("data") or man.get("udp"):
         try:
             files = data.download(root)
-            _say(OK, "Data / Të dhënat", f"{len(files)} official file(s) in data/")
+            n_code = sum(1 for f in files if f.parent.name == "official")
+            detail = f"{len(files) - n_code} data file(s) in data/" + (f" + {n_code} official evaluation file(s) in official/" if n_code else "")
+            _say(OK, "Data / Të dhënat", detail)
         except Exception as exc:  # network problems must not stop the rest
             _say(WARN, "Data / Të dhënat", f"download failed ({exc}); retry with `python tasks.py data`")
     elif man.get("kind") == "esa":
-        _say(SKIP, "Data / Të dhënat", "no direct download: data comes with the official repo (docs/PROBLEM.md)")
+        _say(SKIP, "Data / Të dhënat", "nothing to download for this challenge")
     elif "data" in progress.facts(root):
         _say(OK, "Data / Të dhënat", "instance generator works (src/generator.py)")
     else:
@@ -55,25 +60,56 @@ def _tests(root: Path) -> None:
     _say(OK if res.returncode == 0 else WARN, "Tests / Testet", last)
 
 
+HEAVY = {"torch", "torchvision"}   # gigabytes: never installed automatically, only suggested
+
+
+def _official_packages(root: Path) -> None:
+    """Install what the official ESA code imports (binary wheels only, one by one, so one failure blocks nothing)."""
+    missing = data.missing_packages(root)
+    if not missing:
+        if data.manifest(root).get("requires"):
+            _say(OK, "Official packages / Paketat ESA", "all installed")
+        return
+    for req in missing:
+        if data.module_name(req) not in HEAVY:
+            subprocess.call([sys.executable, "-m", "pip", "install", "-q", "--only-binary=:all:", req],
+                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    importlib.invalidate_caches()
+    still = data.missing_packages(root)
+    if not still:
+        _say(OK, "Official packages / Paketat ESA", "installed: " + ", ".join(missing))
+    else:
+        _say(SKIP, "Official packages / Paketat ESA",
+             "still missing: " + ", ".join(still) + " — see requirements-official.txt "
+             "(pykep/pygmo/heyoka: conda + Python 3.11; your agent can set it up)")
+
+
 def _first_run(root: Path, man: dict) -> None:
+    label = "First run / Ekzekutimi i parë"
+    out = io.StringIO()
     try:
         if man.get("kind") == "esa":
-            esa_problem = importlib.import_module("esa_problem")
-            if not esa_problem.UDP_FILE.exists():
-                _say(SKIP, "First run / Ekzekutimi i parë",
-                     "needs the official UDP: set it up in src/esa_problem.py (your agent can do it)")
+            missing_code = [p for p in data.missing(root) if p.parent.name == "official"]
+            if missing_code:
+                _say(SKIP, label, "official evaluation code not downloaded: run `python tasks.py data`")
                 return
-            importlib.import_module("run").main(["--budget", "2"])
-            _say(OK, "First run / Ekzekutimi i parë", "random-search baseline with the official fitness")
+            with contextlib.redirect_stdout(out):
+                importlib.import_module("run").main(["--budget", "2"])
+            skipped = [l.split(":")[0].replace("skipping ", "") for l in out.getvalue().splitlines()
+                       if l.startswith("skipping ")]
+            ran = len(man.get("problem_ids", [])) - len(skipped)
+            _say(OK, label, f"random-search baseline with the OFFICIAL fitness on {ran} problem(s)"
+                 + (f" (skipped: {', '.join(skipped)} — missing packages)" if skipped else ""))
         else:
             gen = importlib.import_module("generator")
-            importlib.import_module("run").main(["--sizes", next(iter(gen.SIZES))])
-            _say(OK, "First run / Ekzekutimi i parë",
+            with contextlib.redirect_stdout(out):
+                importlib.import_module("run").main(["--sizes", next(iter(gen.SIZES))])
+            _say(OK, label,
                  "pipeline works (src/algorithms.py `baseline` is still a placeholder — your first algorithm goes there)")
     except SystemExit as exc:
-        _say(WARN, "First run / Ekzekutimi i parë", str(exc))
+        _say(SKIP if man.get("kind") == "esa" else WARN, label, str(exc))
     except Exception as exc:
-        _say(WARN, "First run / Ekzekutimi i parë", f"{type(exc).__name__}: {exc}")
+        _say(WARN, label, f"{type(exc).__name__}: {exc}")
 
 
 def _charts(root: Path) -> None:
@@ -81,9 +117,6 @@ def _charts(root: Path) -> None:
         _say(SKIP, "Charts / Grafikët", "no results yet")
         return
     try:
-        import contextlib
-        import io
-
         from . import plots
         with contextlib.redirect_stdout(io.StringIO()):
             plots.main()
@@ -99,6 +132,7 @@ def main(root: str | Path = ".") -> int:
     print(f"\nVSI start — {man.get('title', root.name)}\n")
     _packages(root)
     _data(root, man)
+    _official_packages(root)
     _tests(root)
     _first_run(root, man)
     _charts(root)

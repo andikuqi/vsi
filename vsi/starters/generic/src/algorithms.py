@@ -2,6 +2,7 @@
 
 - Call meter.count() for every state / candidate solution you explore,
   and meter.prune() for every one you skip thanks to pruning.
+- Call meter.record(best_cost_so_far) whenever the best solution improves -> convergence chart.
 - Register every algorithm in ALGORITHMS so `python tasks.py run` measures it.
 - `score(instance, result)` returns the quality numbers that go into results/metrics.csv.
 """

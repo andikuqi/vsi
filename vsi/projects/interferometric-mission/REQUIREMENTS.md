@@ -4,7 +4,8 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 
 ## Problem & data
 - [x] Problem statement copied from the official page (docs/PROBLEM.md)
-- [ ] Official repo cloned, heyoka 3.2.0 installed, UDP wired in src/esa_problem.py
+- [ ] Official data + evaluation code downloaded and wired (`python tasks.py data`) <!-- auto:data -->
+- [ ] Official packages installed (heyoka 3.2.0, pygmo) and the official fitness runs
 - [ ] Own fast baseline counter (unique baselines on a grid) tested against the official fitness at t = 0
 - [ ] Official example / sample solution evaluates to the expected value (test)
 

@@ -8,10 +8,10 @@
 ## 🇦🇱 Si ta përdorësh
 
 1. Lart në këtë faqe kliko **Code → Download ZIP** dhe hape ZIP-in.
-2. Kopjo folderin **`vsi`** brenda projektit tënd.
-3. Hape projektin në VS Code dhe shkruaji agjentit tënd (Copilot, Codex, Gemini, Claude, ChatGPT…):
+2. Kopjo folderin **`vsi`** dhe skedarin **`AGENTS.md`** brenda projektit tënd.
+3. Hape projektin në VS Code dhe shkruaji agjentit tënd (Codex, GitHub Copilot, Cursor…):
 
-> Lexo vsi/AGENTS.md dhe përgatit projektin tim: **[emri i projektit tënd]**
+> Fillo projektin tim: **[emri i projektit tënd]**
 
 Kaq. Agjenti e gjen projektin, krijon skedarët, shkarkon të dhënat, teston, bën grafikët e parë, e nis raportin dhe të tregon progresin dhe hapin tjetër.
 
@@ -20,10 +20,10 @@ Kaq. Agjenti e gjen projektin, krijon skedarët, shkarkon të dhënat, teston, b
 ## 🇬🇧 How to use it
 
 1. At the top of this page click **Code → Download ZIP** and unzip it.
-2. Copy the **`vsi`** folder into your project.
-3. Open your project in VS Code and tell your AI agent (Copilot, Codex, Gemini, Claude, ChatGPT…):
+2. Copy the **`vsi`** folder and the **`AGENTS.md`** file into your project.
+3. Open your project in VS Code and tell your AI agent (Codex, GitHub Copilot, Cursor…):
 
-> Read vsi/AGENTS.md and set up my project: **[your project name]**
+> Start my project: **[your project name]**
 
 That's it. The agent finds your project, creates the files, downloads the data, runs the tests, makes the first charts, starts your report and shows your progress and the next step.
 
@@ -63,7 +63,8 @@ your-project/
 │   └── run.py                ▶️ runs everything / ekzekuton gjithçka
 ├── tests/                    🧪 tests / testet
 ├── data/                     🎲 official data (downloaded) / të dhënat zyrtare (të shkarkuara)
-├── results/                  📊 tables + charts / tabela + grafikë
+├── official/                 🛰️ ESA evaluation code (downloaded) / kodi zyrtar i vlerësimit (ESA)
+├── results/                  📊 tables + charts: scaling, convergence, Pareto / tabela + grafikë
 ├── vsi.json              🧾 project info + data links / info e projektit + linqet e të dhënave
 ├── tasks.py                  ⚙️ commands (the agent uses them) / komandat (i përdor agjenti)
 └── README.md                 📝 your report / raporti yt
@@ -77,6 +78,9 @@ your-project/
 |---|---|
 | Skedarët e tu nuk fshihen dhe nuk ndryshohen. | Your own files are never deleted or changed. |
 | Mos e ndrysho folderin `vsi`. | Don't edit the `vsi` folder. |
+| Claude Code ose Gemini CLI? Ata lexojnë `CLAUDE.md` / `GEMINI.md`, prandaj herën e parë shkruaj: "Lexo vsi/AGENTS.md dhe fillo projektin tim". | Claude Code or Gemini CLI? They read `CLAUDE.md` / `GEMINI.md`, so the first time say: "Read vsi/AGENTS.md and start my project". |
+| Ke tashmë `AGENTS.md`? Mos e zëvendëso: VSI i shton udhëzimet e veta në fund të tij. Thuaji agjentit "Lexo vsi/AGENTS.md dhe fillo projektin tim". | Already have an `AGENTS.md`? Keep yours: VSI adds its instructions at the end. Tell your agent "Read vsi/AGENTS.md and start my project". |
+| ChatGPT / Copilot 365 / Gemini në web: pasi të përgatitet projekti, ekzekuto `python tasks.py context` dhe ngarko `CONTEXT.md`. | ChatGPT / Copilot 365 / Gemini web: after setup run `python tasks.py context` and upload `CONTEXT.md`. |
 | VSI të jep bazën, jo zgjidhjen. Algoritmin e bën ti, dhe duhet ta kuptosh. | VSI gives you the base, not the solution. The algorithm is yours, and you must understand it. |
 
 | Mark | 🇦🇱 | 🇬🇧 |

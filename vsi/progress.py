@@ -34,7 +34,7 @@ def facts(root: str | Path = ".") -> set[str]:
     man = data.manifest(root)
     found = set()
     if man.get("kind") == "esa":
-        if man.get("data") and not data.missing(root):
+        if (man.get("data") or man.get("udp")) and not data.missing(root):
             found.add("data")
         rows = _rows(root / "results" / "metrics.csv")
         ran = [r for r in rows if r.get("fitness") not in (None, "", "None")]

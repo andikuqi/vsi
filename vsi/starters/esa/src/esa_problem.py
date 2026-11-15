@@ -1,32 +1,40 @@
-"""Load the official ESA problem (UDP) for this challenge.
+"""Load the official ESA problem (UDP = "user defined problem") for this challenge.
 
-Setup (once):
-  1. Open the challenge page (docs/PROBLEM.md -> Source) and find its GitHub repository and data files.
-  2. Clone the repo next to this project, e.g.  git clone <official repo> official
-  3. Set UDP_FILE and UDP_CLASS below to the Python file / class that defines the problem.
-     Most SpOC UDPs offer: fitness(x), get_bounds(), get_nobj(), get_nix(), pretty(x), plot(x), example().
-  4. Some UDPs need a data file in their constructor: set UDP_ARGS.
+`python tasks.py data` (or `start`) downloads, from the challenge page:
+  - the official evaluation code, one file per problem -> official/<problem id>.py
+  - the official data files -> data/... (the same paths the official code expects)
+Every official file ends with a ready object `udp = ...` offering fitness(x), get_bounds() and usually
+pretty(x), plot(x), example(). load_udp() returns that object.
 
-Then `python tasks.py run` runs the baseline against the official fitness function.
+Its Python packages are listed in requirements-official.txt (pykep / pygmo / heyoka: easiest with conda).
 """
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
+from vsi.data import udp_path
 from vsi.esa import load_module
 
 ROOT = Path(__file__).resolve().parent.parent
 
 CHALLENGE = "{challenge_id}"      # id used in submission files (see docs/PROBLEM.md)
 PROBLEM_IDS = {problem_ids}      # official problem ids (docs/PROBLEM.md)
-UDP_FILE = ROOT / "official" / "TODO_path_to_udp.py"
-UDP_CLASS = "TODO_ClassName"
-UDP_ARGS: dict = {}
 
 
-def load_udp(problem_id: str | None = None):
-    if not UDP_FILE.exists():
-        raise SystemExit(f"Official UDP not found at {UDP_FILE}. Follow the setup steps in src/esa_problem.py.")
-    module = load_module(UDP_FILE)
-    return getattr(module, UDP_CLASS)(**UDP_ARGS)
+def udp_file(problem_id: str) -> Path:
+    return udp_path(problem_id, ROOT)
+
+
+def load_udp(problem_id: str):
+    """The official `udp` object for one problem (SystemExit / ImportError with a clear message otherwise)."""
+    path = udp_file(problem_id)
+    if not path.exists():
+        raise SystemExit(f"Official evaluation code missing ({path.name}): run `python tasks.py data`.")
+    cwd = os.getcwd()
+    os.chdir(ROOT)                    # the official code opens data/... relative to the project root
+    try:
+        return load_module(path).udp
+    finally:
+        os.chdir(cwd)

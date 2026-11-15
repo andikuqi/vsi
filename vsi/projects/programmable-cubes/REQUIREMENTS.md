@@ -4,7 +4,8 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 
 ## Problem & data
 - [x] Problem statement copied from the official page (docs/PROBLEM.md)
-- [ ] Official repo cloned, data paths set, UDP wired in src/esa_problem.py
+- [ ] Official data + evaluation code downloaded and wired (`python tasks.py data`) <!-- auto:data -->
+- [ ] Own loader for the cube configurations (data/spoc3/cubes/...) into our data structures
 - [ ] Own state representation + legal-move check, tested against the official UDP on random moves
 - [ ] Official example / sample solution evaluates to the expected value (test)
 

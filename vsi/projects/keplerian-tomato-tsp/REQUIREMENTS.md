@@ -4,8 +4,8 @@ Tick a box (`[x]`) only when it is done **and** verified. `python tasks.py check
 
 ## Problem & data
 - [x] Problem statement copied from the official page (docs/PROBLEM.md)
-- [ ] Official data files downloaded (`python tasks.py data`) <!-- auto:data -->
-- [ ] Instance parser for .kttsp files + official TomatoProblem utilities (pykep 2.x) working
+- [ ] Official data + evaluation code downloaded and wired (`python tasks.py data`) <!-- auto:data -->
+- [ ] Own parser for .kttsp files; official utilities working (pykep 2.x)
 - [ ] Own feasibility checker (permutation, timing, ΔV limits, exception count) tested on sample tours
 - [ ] Official example / sample solution evaluates to the expected value (test)
 
