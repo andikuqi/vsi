@@ -1,0 +1,169 @@
+"""Project catalog: find a student's project by name and scaffold it."""
+
+from __future__ import annotations
+
+import json
+import re
+import shutil
+from pathlib import Path
+
+PKG = Path(__file__).resolve().parent
+PROJECTS = PKG / "projects"
+STARTERS = PKG / "starters"
+TEMPLATES = PKG / "templates"
+
+AGENT_FILES = {  # file -> how to render AGENTS.md for each AI tool
+    "AGENTS.md": "plain",                               # Codex, Cursor, Copilot (also reads it), many others
+    "GEMINI.md": "plain",                               # Gemini CLI
+    ".github/copilot-instructions.md": "plain",         # GitHub Copilot
+    ".cursor/rules/vsi.mdc": "cursor",              # Cursor rules
+    "CLAUDE.md": "claude",                              # Claude Code (imports AGENTS.md)
+}
+
+
+def load() -> list[dict]:
+    return json.loads((PROJECTS / "index.json").read_text(encoding="utf-8"))["projects"]
+
+
+def _words(text: str) -> set[str]:
+    return set(re.findall(r"[a-z0-9*]+", text.lower()))
+
+
+def find(query: str) -> list[tuple[int, dict]]:
+    """Rank projects by word overlap with title, slug and aliases (exact slug wins)."""
+    q = _words(query)
+    ranked = []
+    for p in load():
+        if query.strip().lower() == p["slug"]:
+            return [(100, p)]
+        hay = _words(" ".join([p["title"], p["slug"].replace("-", " "), *p["aliases"]]))
+        score = len(q & hay)
+        score += sum(2 for a in p["aliases"] if a in query.lower())
+        if score:
+            ranked.append((score, p))
+    return sorted(ranked, key=lambda sp: -sp[0])
+
+
+def get(slug: str) -> dict:
+    for p in load():
+        if p["slug"] == slug:
+            return p
+    matches = find(slug)
+    if matches:
+        return matches[0][1]
+    raise KeyError(f"unknown project '{slug}' — try `vsi list`")
+
+
+def _render(text: str, project: dict) -> str:
+    kind_notes = ""
+    if project["kind"] == "esa":
+        kind_notes = (
+            f"- ESA SpOC challenge ({project.get('series')}). Data + official scorer come from ESA"
+            + (f": {project['official_repo']}" if project.get("official_repo") else " (find the repo on the challenge page)")
+            + ".\n- Final answers must be checked with the official ESA fitness function before submitting.\n"
+        )
+        if not project.get("verified"):
+            kind_notes += ("- docs/PROBLEM.md is only a stub: FIRST read the challenge page (it is JavaScript-rendered: "
+                           "open it in a browser) and replace PROBLEM.md and REQUIREMENTS.md with the real spec.\n")
+    for key, value in {"title": project["title"], "slug": project["slug"],
+                       "source": project.get("source") or "not provided — ask the professor",
+                       "kind_notes": kind_notes, "slug_esa": project["slug"]}.items():
+        text = text.replace(f"[[{key}]]", value).replace("{" + key + "}", value)
+    return text
+
+
+def _copy_tree(src: Path, dst: Path, project: dict) -> None:
+    for path in src.rglob("*"):
+        if path.is_dir() or "__pycache__" in path.parts:
+            continue
+        target = dst / path.relative_to(src)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        if path.suffix in {".md", ".py", ".txt", ".toml", ".json", ""} or path.name == ".gitignore":
+            target.write_text(_render(path.read_text(encoding="utf-8"), project), encoding="utf-8")
+        else:
+            shutil.copy2(path, target)
+
+
+def _esa_stub_docs(project: dict) -> tuple[str, str]:
+    problem = (f"# {project['title']}\n\nESA {project.get('series')} challenge.\n"
+               f"Source: {project['source']}\n"
+               + (f"Official repo: {project['official_repo']}\n" if project.get("official_repo") else "")
+               + f"\n{project['summary']}\n\n**TODO (first task):** open the source page in a browser and copy the "
+               "problem definition here: input/data, decision vector, objectives, constraints, submission format.\n")
+    requirements = """# Requirements checklist
+
+## Problem & data
+- [ ] Real problem statement copied into docs/PROBLEM.md
+- [ ] Official repo cloned, UDP wired in src/esa_problem.py, data downloaded
+- [ ] Official example solution evaluates correctly (test)
+
+## Algorithms
+- [ ] Baseline (random search) runs end to end
+- [ ] Constructive / greedy heuristic
+- [ ] Improvement method (local search / SA / GA / …)
+- [ ] At least one idea designed or modified by us (DECISIONS.md)
+
+## Analysis
+- [ ] Pseudocode, time & space complexity for every algorithm
+- [ ] Why the problem is hard / why heuristics
+
+## Experiments
+- [ ] Metrics: fitness, time, memory, evaluations
+- [ ] Results on all problem instances, comparison table, charts
+- [ ] Theory vs measured performance
+
+## Delivery
+- [ ] Submission file(s) verified with the official fitness
+- [ ] README report complete
+- [ ] Defense preparation
+"""
+    return problem, requirements
+
+
+def scaffold(slug: str, target: str | Path, force: bool = False) -> Path:
+    """Create a ready-to-work project for `slug` in `target`."""
+    project = get(slug)
+    target = Path(target)
+    if target.exists() and any(target.iterdir()) and not force:
+        raise SystemExit(f"{target} is not empty (use --force to add VSI files into an existing repo).")
+    target.mkdir(parents=True, exist_ok=True)
+
+    starter = project.get("starter", "generic")
+    _copy_tree(STARTERS / "common", target, project)
+    if starter != "esa":
+        _copy_tree(STARTERS / "generic", target, project)       # run.py, algorithms.py, generator.py
+    if (STARTERS / starter).exists():
+        _copy_tree(STARTERS / starter, target, project)         # project-specific files override
+
+    docs = target / "docs"
+    docs.mkdir(exist_ok=True)
+    pdir = PROJECTS / project["slug"]
+    if (pdir / "PROBLEM.md").exists():
+        for name in ("PROBLEM.md", "REQUIREMENTS.md"):
+            shutil.copy2(pdir / name, docs / name)
+    else:
+        problem, requirements = _esa_stub_docs(project)
+        (docs / "PROBLEM.md").write_text(problem, encoding="utf-8")
+        (docs / "REQUIREMENTS.md").write_text(requirements, encoding="utf-8")
+    shutil.copy2(TEMPLATES / "PROMPTS.md", docs / "PROMPTS.md")
+
+    write_agent_files(target, project)
+    return target
+
+
+def write_agent_files(target: Path, project: dict) -> list[Path]:
+    """Write the same instructions in the file each AI tool reads automatically."""
+    body = _render((TEMPLATES / "AGENTS.md").read_text(encoding="utf-8"), project)
+    written = []
+    for rel, style in AGENT_FILES.items():
+        path = Path(target) / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        if style == "claude":
+            text = "@AGENTS.md\n"
+        elif style == "cursor":
+            text = f"---\ndescription: VSI project rules\nalwaysApply: true\n---\n\n{body}"
+        else:
+            text = body
+        path.write_text(text, encoding="utf-8")
+        written.append(path)
+    return written
