@@ -3,8 +3,11 @@
 VSI is a library + project catalog for Algorithm Design & Analysis projects.
 
 ## If a student asks you to start or set up their project
-1. Find it: `vsi find <words from the project title>` (catalog: `vsi/projects/index.json`).
-2. Scaffold it: `vsi new <slug> <folder>` — or inside an existing repo: `vsi new <slug> . --force`.
+No install needed: copy the `vsi/` folder into the student's project and use `python -m vsi ...`
+(or `vsi ...` if it was pip-installed).
+1. Find it: `python -m vsi find <words from the project title>` (catalog: `vsi/projects/index.json`).
+2. Scaffold it inside the student's repo: `python -m vsi new <slug> . --force` (existing files are kept),
+   or a new folder: `python -m vsi new <slug> <folder>` (the library is bundled into it as `vsi/`).
 3. Go into the folder and follow **its** `AGENTS.md` (commands, rules, definition of done).
 4. If the project is marked "spec not verified", first read the source page and replace `docs/PROBLEM.md`
    and `docs/REQUIREMENTS.md` with the real specification.

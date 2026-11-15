@@ -1,4 +1,4 @@
-"""VSI command line.
+"""VSI command line.  (No install? Use `python -m vsi ...` instead of `vsi ...`.)
 
     vsi list                          all projects in the catalog
     vsi find <words>                  find a project by name (e.g. "torso", "dna assembly")

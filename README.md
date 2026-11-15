@@ -23,41 +23,54 @@
 
 ---
 
-## 🚀 Install / Instalimi
+## 🚀 Setup in 3 steps / Vendosja në 3 hapa
 
-**Requirements / Kërkesat:** Python 3.10+ and Git / Python 3.10+ dhe Git
+**One folder, nothing to install.** / **Një folder, asgjë për të instaluar.**
+Requirements / Kërkesat: Python 3.10+
 
-| Step / Hapi | Command / Komanda |
-|---|---|
-| 1. Download / Shkarko | `git clone https://github.com/andikuqi/vsi.git` |
-| 2. Install / Instalo | `pip install -e vsi` |
-| 3. Check / Kontrollo | `vsi list` |
+| Step / Hapi | English | Shqip |
+|---|---|---|
+| **1** | On GitHub: **Code → Download ZIP**, unzip it | Në GitHub: **Code → Download ZIP**, hape ZIP-in |
+| **2** | Copy **only the `vsi` folder** into your project | Kopjo **vetëm folderin `vsi`** në projektin tënd |
+| **3** | Open a terminal in your project and run the commands below | Hap terminalin në projekt dhe ekzekuto komandat më poshtë |
+
+```
+python -m vsi find traffic                              # find your project / gjej projektin
+python -m vsi new traffic-flow-optimization . --force   # add the files / shto skedarët
+python tasks.py setup                                       # install matplotlib + pytest
+```
+
+Your project after that / Projekti yt pas kësaj:
+
+```
+my-project/
+├── vsi/        ← the folder you copied (do not edit) / folderi që kopjove (mos e ndrysho)
+├── src/            ← your code / kodi yt
+├── docs/  tests/  tasks.py  AGENTS.md ...
+└── README.md       ← yours, it is not overwritten / i yti, nuk mbishkruhet
+```
+
+| ✅ | English | Shqip |
+|---|---|---|
+| | Your existing files are **never overwritten** | Skedarët që i ke **nuk mbishkruhen kurrë** |
+| | Commit the `vsi/` folder too, so your classmates and your agent have it | Bëje commit edhe folderin `vsi/`, që ta kenë shokët dhe agjenti |
+| | The folder must be named exactly `vsi` | Folderi duhet të quhet saktësisht `vsi` |
+
+<details>
+<summary>Alternative: install with pip / Alternativa: instalim me pip</summary>
+
+```
+git clone https://github.com/andikuqi/vsi.git
+pip install -e vsi
+vsi new <slug> my-project     # makes a new folder that already contains vsi/
+```
+</details>
+
+`<slug>` = project name from the catalog below / emri i projektit nga katalogu më poshtë.
 
 ---
 
-## 🧭 Use / Përdorimi
-
-### 1. Find your project / Gjej projektin tënd
-
-```
-vsi find traffic
-```
-
-### 2. Create it / Krijoje
-
-| Situation / Situata | Command / Komanda |
-|---|---|
-| New folder / Folder i ri | `vsi new <slug> my-project` |
-| Repo you already have / Repo që e ke tashmë | `cd my-repo` → `vsi new <slug> . --force` |
-
-`<slug>` = project name from the table below / emri i projektit nga tabela më poshtë.
-
-### 3. Work / Puno
-
-```
-cd my-project
-python tasks.py setup
-```
+## 🧭 Daily work / Puna e përditshme
 
 | Command / Komanda | English | Shqip |
 |---|---|---|
@@ -127,6 +140,7 @@ python tasks.py setup
 
 ```
 my-project/
+├── vsi/                             ← the library, one folder / libraria, një folder
 ├── AGENTS.md  GEMINI.md  CLAUDE.md      ← AI instructions / udhëzime për AI
 ├── .github/copilot-instructions.md
 ├── .cursor/rules/vsi.mdc

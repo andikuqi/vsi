@@ -1,6 +1,6 @@
 """One-word project commands (Windows, macOS, Linux).
 
-    python tasks.py setup      install dependencies (incl. VSI)
+    python tasks.py setup      install dependencies (VSI is the vsi/ folder)
     python tasks.py data       download official data (if the project has src/download.py)
     python tasks.py test       run tests (must stay green)
     python tasks.py run        run all algorithms on all instances -> results/metrics.csv

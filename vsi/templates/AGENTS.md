@@ -8,8 +8,9 @@ Read this whole file before changing anything.
 - Requirements checklist (definition of done): `docs/REQUIREMENTS.md`
 - Milestones: `docs/PLAN.md` · Design log: `docs/DECISIONS.md`
 [[kind_notes]]
-This project was scaffolded by **VSI** (`vsi new [[slug]]`). VSI provides the infrastructure;
+This project was scaffolded by **VSI** (`python -m vsi new [[slug]]`). VSI provides the infrastructure;
 the student's own algorithms are the point of the project.
+- The `vsi/` folder is the VSI library, bundled so nothing needs installing. **Do not edit it**; import from it.
 
 ## Commands (run from the project root)
 ```

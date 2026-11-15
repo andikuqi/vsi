@@ -72,11 +72,13 @@ def _render(text: str, project: dict) -> str:
     return text
 
 
-def _copy_tree(src: Path, dst: Path, project: dict) -> None:
+def _copy_tree(src: Path, dst: Path, project: dict, keep: frozenset = frozenset()) -> None:
     for path in src.rglob("*"):
         if path.is_dir() or "__pycache__" in path.parts:
             continue
         target = dst / path.relative_to(src)
+        if target.resolve() in keep:  # the student's own file: never overwrite it
+            continue
         target.parent.mkdir(parents=True, exist_ok=True)
         if path.suffix in {".md", ".py", ".txt", ".toml", ".json", ""} or path.name == ".gitignore":
             target.write_text(_render(path.read_text(encoding="utf-8"), project), encoding="utf-8")
@@ -127,28 +129,43 @@ def scaffold(slug: str, target: str | Path, force: bool = False) -> Path:
     if target.exists() and any(target.iterdir()) and not force:
         raise SystemExit(f"{target} is not empty (use --force to add VSI files into an existing repo).")
     target.mkdir(parents=True, exist_ok=True)
+    # Files the student already had (existing repo + --force) stay untouched.
+    keep = frozenset(f.resolve() for f in target.rglob("*") if f.is_file() and "vsi" not in f.relative_to(target).parts[:1])
 
     starter = project.get("starter", "generic")
-    _copy_tree(STARTERS / "common", target, project)
+    _copy_tree(STARTERS / "common", target, project, keep)
     if starter != "esa":
-        _copy_tree(STARTERS / "generic", target, project)       # run.py, algorithms.py, generator.py
+        _copy_tree(STARTERS / "generic", target, project, keep)  # run.py, algorithms.py, generator.py
     if (STARTERS / starter).exists():
-        _copy_tree(STARTERS / starter, target, project)         # project-specific files override
+        _copy_tree(STARTERS / starter, target, project, keep)    # project-specific files override
 
     docs = target / "docs"
     docs.mkdir(exist_ok=True)
     pdir = PROJECTS / project["slug"]
     if (pdir / "PROBLEM.md").exists():
-        for name in ("PROBLEM.md", "REQUIREMENTS.md"):
-            shutil.copy2(pdir / name, docs / name)
+        files = {name: (pdir / name).read_text(encoding="utf-8") for name in ("PROBLEM.md", "REQUIREMENTS.md")}
     else:
-        problem, requirements = _esa_stub_docs(project)
-        (docs / "PROBLEM.md").write_text(problem, encoding="utf-8")
-        (docs / "REQUIREMENTS.md").write_text(requirements, encoding="utf-8")
-    shutil.copy2(TEMPLATES / "PROMPTS.md", docs / "PROMPTS.md")
+        files = dict(zip(("PROBLEM.md", "REQUIREMENTS.md"), _esa_stub_docs(project)))
+    files["PROMPTS.md"] = (TEMPLATES / "PROMPTS.md").read_text(encoding="utf-8")
+    for name, text in files.items():
+        if (docs / name).resolve() not in keep:
+            (docs / name).write_text(text, encoding="utf-8")
 
     write_agent_files(target, project)
+    bundle_library(target)
     return target
+
+
+def bundle_library(target: Path) -> Path:
+    """Put the whole VSI folder inside the project as `vsi/`, so it works without `pip install`.
+
+    Skipped when VSI already lives in that project (the student copied the folder there).
+    """
+    dest = Path(target) / "vsi"
+    if dest.resolve() != PKG:
+        shutil.copytree(PKG, dest, dirs_exist_ok=True,
+                        ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+    return dest
 
 
 def write_agent_files(target: Path, project: dict) -> list[Path]:
