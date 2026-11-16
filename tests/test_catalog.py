@@ -197,3 +197,15 @@ def test_students_own_readme_gets_the_report_template_in_docs(tmp_path):
     report = (tmp_path / "docs" / "REPORT.md").read_text(encoding="utf-8")
     assert "### 7. Results" in report and "vsi:results:start" in report and "](PROBLEM.md)" in report
     assert (tmp_path / "README.md").read_text(encoding="utf-8") == "# my repo"
+
+
+def test_chat_packs_are_up_to_date_for_every_project():
+    """chat/<slug>.md is committed for web users; regenerate with `python -m vsi chat` after catalog changes."""
+    from pathlib import Path
+    from vsi import chatpack
+    chat = Path(catalog.PKG).parent / "chat"
+    for p in catalog.load():
+        path = chat / f"{p['slug']}.md"
+        assert path.exists(), f"missing {path}: run python -m vsi chat"
+        assert path.read_text(encoding="utf-8") == chatpack.build(p), f"stale {path}: run python -m vsi chat"
+        assert f"python -m vsi new {p['slug']} . --force" in path.read_text(encoding="utf-8")
