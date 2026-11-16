@@ -5,7 +5,8 @@ The student may be a beginner: do the commands yourself and explain each step in
 (reply in the student's language — often Albanian).
 
 ## Setup (do this once)
-Run from the student's project root (the folder that contains `vsi/`):
+Run from the student's project root (the folder that contains `vsi/`). Use `python3` instead of `python` on macOS / Linux.
+If `start` reports it created `.venv`, activate it (`source .venv/bin/activate`, Windows: `.venv\Scripts\activate`) before later commands.
 
 1. Find their project: `python -m vsi find <words from the project title>`
    If you are unsure which one it is, run `python -m vsi list` and ask the student.
