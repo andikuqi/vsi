@@ -209,3 +209,31 @@ def test_chat_packs_are_up_to_date_for_every_project():
         assert path.exists(), f"missing {path}: run python -m vsi chat"
         assert path.read_text(encoding="utf-8") == chatpack.build(p), f"stale {path}: run python -m vsi chat"
         assert f"python -m vsi new {p['slug']} . --force" in path.read_text(encoding="utf-8")
+
+
+def test_every_project_has_a_problem_model_and_diagram_docs(tmp_path):
+    from vsi.diagram_specs import ALGORITHMS, MODELS
+    assert set(MODELS) == {p["slug"] for p in catalog.load()}
+    assert len(ALGORITHMS) >= 6
+    target = catalog.scaffold("mining", tmp_path / "m")
+    text = (target / "docs" / "DIAGRAMS.md").read_text(encoding="utf-8")
+    assert text.count("```mermaid") == 2 + len(ALGORITHMS)        # pipeline + model + templates
+    assert "Problem model — Mining the Belt" in text and "Make a diagram of YOUR algorithm" in text
+
+
+def test_diagram_renders_mermaid_and_png(tmp_path):
+    from vsi.diagram_specs import ALGORITHMS
+    d = ALGORITHMS["branch_and_bound"]
+    assert d.mermaid().startswith("```mermaid\nflowchart TD") and "-->|yes|" in d.mermaid()
+    png = d.png(tmp_path / "bb.png")
+    assert png.exists() and png.stat().st_size > 10_000
+
+
+@pytest.mark.parametrize("slug", ["traffic-flow-optimization", "multi-robot-coordination",
+                                  "protein-structure-prediction", "time-travel-paradox", "chronos-nexus",
+                                  "dna-genome-reconstruction"])
+def test_instance_pictures_for_generated_projects(slug, tmp_path):
+    from vsi import visualize
+    target = catalog.scaffold(slug, tmp_path / slug)
+    pictures = visualize.instance_pictures(target)
+    assert pictures and all(p.exists() for p in pictures)
