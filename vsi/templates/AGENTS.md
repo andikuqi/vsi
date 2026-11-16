@@ -7,6 +7,9 @@ Read this whole file before changing anything.
 - Problem statement: `docs/PROBLEM.md` (source: [[source]])
 - Requirements checklist (definition of done): `docs/REQUIREMENTS.md`
 - Milestones: `docs/PLAN.md` · Design log: `docs/DECISIONS.md`
+- Diagrams: `docs/DIAGRAMS.md` (Mermaid: project pipeline, problem model, algorithm templates; PNGs in
+  `docs/diagrams/`). Read the problem model first. For each algorithm the student designs, add its own diagram
+  (`from vsi.diagrams import Diagram, Node`, see the end of DIAGRAMS.md) and use it in the report.
 [[kind_notes]]
 This project was scaffolded by **VSI** (`python -m vsi new [[slug]]`). VSI provides the infrastructure;
 the student's own algorithms are the point of the project.
@@ -20,6 +23,7 @@ python tasks.py data       download official data (if any)
 python tasks.py test       run tests — must stay green
 python tasks.py run        run all algorithms on all instances -> results/metrics.csv
 python tasks.py plots      charts -> results/*.png
+python tasks.py visualize  diagrams + pictures of the instances -> docs/diagrams/
 python tasks.py report     refresh the automatic report blocks (status, results table, charts)
 python tasks.py check      progress + next step (reads docs/REQUIREMENTS.md)
 python tasks.py context    CONTEXT.md bundle for chat-only AIs
@@ -56,6 +60,8 @@ Reply in the student's language (often Albanian). Assume they may be a beginner.
 7. Keep code simple and commented: the student must explain every line at the defense.
    After finishing a feature, give the student a short plain-language explanation of it.
 8. Never commit `data/`, `results/` or secrets.
+9. Be transparent: keep the README "Tools used" section true (what VSI generated, what the student designed,
+   which AI was used). VSI diagrams are templates; the student's own algorithms get their own diagrams.
 
 ## Definition of done
 `python tasks.py check` shows 100% and `python tasks.py test` passes.
