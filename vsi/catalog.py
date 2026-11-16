@@ -143,6 +143,11 @@ def scaffold(slug: str, target: str | Path, force: bool = False) -> Path:
 
     docs = target / "docs"
     docs.mkdir(exist_ok=True)
+    report = docs / "REPORT.md"
+    if (target / "README.md").resolve() in keep and report.resolve() not in keep:
+        # The student kept their own README: the report template (with its automatic blocks) goes to docs/REPORT.md.
+        template = _render((STARTERS / "common" / "README.md").read_text(encoding="utf-8"), project)
+        report.write_text(template.replace("](docs/", "]("), encoding="utf-8")
     pdir = PROJECTS / project["slug"]
     if (pdir / "PROBLEM.md").exists():
         files = {name: (pdir / name).read_text(encoding="utf-8") for name in ("PROBLEM.md", "REQUIREMENTS.md")}

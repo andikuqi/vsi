@@ -189,3 +189,11 @@ def test_experiment_writes_convergence_and_fronts(tmp_path, monkeypatch):
     assert "small/a" in json.loads((tmp_path / "results" / "fronts.json").read_text())
     names = {p.name for p in plots.main()}
     assert {"scaling_evaluated.png", "quality_cost.png", "convergence_small.png", "front_large.png"} <= names
+
+
+def test_students_own_readme_gets_the_report_template_in_docs(tmp_path):
+    (tmp_path / "README.md").write_text("# my repo", encoding="utf-8")
+    catalog.scaffold("time-travel-paradox", tmp_path, force=True)
+    report = (tmp_path / "docs" / "REPORT.md").read_text(encoding="utf-8")
+    assert "### 7. Results" in report and "vsi:results:start" in report and "](PROBLEM.md)" in report
+    assert (tmp_path / "README.md").read_text(encoding="utf-8") == "# my repo"
