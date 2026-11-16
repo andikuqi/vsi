@@ -164,6 +164,9 @@ def scaffold(slug: str, target: str | Path, force: bool = False) -> Path:
             "# pykep / pygmo / heyoka install most easily with conda + Python 3.11:\n"
             "#   conda install -c conda-forge pykep pygmo heyoka\n" + "\n".join(project["requires"]) + "\n",
             encoding="utf-8")
+    if (docs / "DIAGRAMS.md").resolve() not in keep:
+        from .diagram_specs import write_docs
+        write_docs(target, project, png=False)
     write_agent_files(target, project)
     write_manifest(target, project)
     bundle_library(target)
