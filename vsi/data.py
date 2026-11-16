@@ -10,6 +10,7 @@ import importlib.util
 import json
 import re
 import shutil
+import time
 import urllib.request
 from pathlib import Path
 
@@ -59,16 +60,42 @@ def missing_packages(root: str | Path = ".") -> list[str]:
     return [r for r in manifest(root).get("requires", []) if importlib.util.find_spec(module_name(r)) is None]
 
 
-def download(root: str | Path = ".", timeout: float = 60) -> list[Path]:
-    """Download every data / evaluation-code file that is not there yet. Returns the files present afterwards."""
-    present = []
-    for url, dest in _targets(root):
-        if not dest.exists():
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            tmp = dest.with_suffix(dest.suffix + ".part")
-            print(f"downloading {url}")
+class DownloadError(RuntimeError):
+    """Some files could not be downloaded (the others were). Running the command again retries only those."""
+
+
+def _fetch(url: str, dest: Path, timeout: float, attempts: int) -> None:
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    tmp = dest.with_suffix(dest.suffix + ".part")
+    for attempt in range(1, attempts + 1):
+        try:
             with urllib.request.urlopen(url, timeout=timeout) as response, tmp.open("wb") as out:
                 shutil.copyfileobj(response, out)
             tmp.replace(dest)
+            return
+        except OSError:                       # timeouts, dropped connections, HTTP errors
+            tmp.unlink(missing_ok=True)
+            if attempt == attempts:
+                raise
+            time.sleep(2 * attempt)
+
+
+def download(root: str | Path = ".", timeout: float = 120, attempts: int = 3) -> list[Path]:
+    """Download every data / evaluation-code file that is not there yet (with retries).
+
+    Returns the files present afterwards. If some files still fail, the others are kept and DownloadError
+    lists the failed ones (run again to retry just those)."""
+    present, failed = [], []
+    for url, dest in _targets(root):
+        if not dest.exists():
+            print(f"downloading {url}")
+            try:
+                _fetch(url, dest, timeout, attempts)
+            except OSError as exc:
+                failed.append(f"{dest.name} ({type(exc).__name__})")
+                continue
         present.append(dest)
+    if failed:
+        raise DownloadError(f"{len(present)} file(s) ok, {len(failed)} failed: {', '.join(failed)} "
+                            "- the ESA server may be slow; run `python tasks.py data` again")
     return present
