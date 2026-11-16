@@ -64,10 +64,14 @@ def build(project: dict) -> str:
     head = (f"# VSI chat pack — {project['title']}\n\n"
             "> **For students using ChatGPT, Gemini or Claude in the browser or the app.**\n"
             "> Upload this file to the chat and write: *\"Read this file and guide me step by step.\"*\n"
-            "> 🇦🇱 Ngarkoje këtë skedar në chat dhe shkruaj: *\"Lexo këtë skedar dhe më udhëhiq hap pas hapi.\"*\n\n"
+            "> SQ: Ngarkoje këtë skedar në chat dhe shkruaj: *\"Lexo këtë skedar dhe më udhëhiq hap pas hapi.\"*\n\n"
             f"Project id (slug): `{slug}` · Source: {project.get('source') or 'ask the professor'}\n\n")
+    from .diagram_specs import MODELS, pipeline
+    diagrams = "\n---\n\n## Diagrams\n\n### Problem model\n\n" + (MODELS[slug].mermaid() if slug in MODELS else "")
+    diagrams += "\n\n### Project pipeline\n\n" + pipeline(project).mermaid() + "\n"
     return (head + AI_RULES.format(repo=REPO, slug=slug)
             + "\n---\n\n## The project (docs/PROBLEM.md)\n\n" + _demote(problem)
+            + diagrams
             + "\n---\n\n## Requirements checklist (docs/REQUIREMENTS.md)\n\n" + _demote(reqs))
 
 
