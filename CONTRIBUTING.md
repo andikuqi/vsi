@@ -24,3 +24,6 @@ No install needed: copy the `vsi/` folder into the student's project and use `py
 - `python -m pytest` must pass. Adding a project = add an entry to `index.json` (+ docs folder / starter if available)
   and a test in `tests/test_catalog.py` that scaffolds it.
 - Starters give infrastructure (data, evaluation, measuring), never a finished solution to the assignment.
+
+## Chat packs
+After changing the catalog or project docs run `python -m vsi chat` to refresh `chat/*.md` (a test checks they are up to date).
