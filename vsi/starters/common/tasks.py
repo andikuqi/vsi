@@ -6,6 +6,7 @@
     python tasks.py test       run tests (must stay green)
     python tasks.py run        run all algorithms on all instances -> results/metrics.csv
     python tasks.py plots      charts from results/ -> results/*.png
+    python tasks.py visualize  diagrams (docs/DIAGRAMS.md + PNGs) and pictures of the instances
     python tasks.py report     refresh the automatic parts of the report (status, results table, charts)
     python tasks.py check      progress from docs/REQUIREMENTS.md + next step
     python tasks.py context    write CONTEXT.md (one file to upload to ChatGPT / Copilot 365 / Gemini web)
@@ -63,6 +64,13 @@ def plots(_):
     p.main()
 
 
+def visualize(_):
+    from vsi.visualize import main
+    for path in main(ROOT):
+        print(path.relative_to(ROOT))
+    print("docs/DIAGRAMS.md")
+
+
 def report(_):
     from vsi import progress, report as r
     progress.auto_tick("docs/REQUIREMENTS.md", progress.facts(ROOT))
@@ -79,7 +87,7 @@ def context(_):
     print(write_context(ROOT))
 
 
-COMMANDS = {f.__name__: f for f in (start, setup, data, test, run, plots, report, check, context)}
+COMMANDS = {f.__name__: f for f in (start, setup, data, test, run, plots, visualize, report, check, context)}
 
 if __name__ == "__main__":
     if len(sys.argv) < 2 or sys.argv[1] not in COMMANDS:
