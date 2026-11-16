@@ -2,7 +2,7 @@
 
 > **For students using ChatGPT, Gemini or Claude in the browser or the app.**
 > Upload this file to the chat and write: *"Read this file and guide me step by step."*
-> 🇦🇱 Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
+> SQ: Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
 
 Project id (slug): `trappist-tour` · Source: https://optimise.esa.int/challenge/spoc-trappist-tour/About
 
@@ -96,6 +96,60 @@ Python: `from submission_helper import create_submission` (https://api.optimize.
 The planet order is a permutation problem (7! = 5 040 orders) and, for each order, the trajectory is a nonlinear
 continuous optimisation with many local optima. Typical approach: enumerate / prune orders, optimise the continuous
 legs per order (DE / CMA-ES / multi-start local search), then build the Pareto front.
+
+---
+
+## Diagrams
+
+### Problem model
+
+```mermaid
+flowchart TD
+    x["x = entry leg + 6 legs<br/>(flyby, DSM, duration) + order"]
+    p{"Order is a permutation<br/>of planets b…h?"}
+    t["Propagate legs:<br/>Lambert + flybys"]
+    d{"Closest approach to the<br/>star ≥ 834 840 km?"}
+    j["Objectives: total ΔV,<br/>mission time"]
+    h(["Pareto set (≤ 100)<br/>hypervolume ref [2500, 4000]"])
+    x --> p
+    p -->|yes| t
+    t --> d
+    d -->|yes| j
+    j --> h
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class x,t,j box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class h round
+    classDef diamond fill:#fff4e5,stroke:#e08a00,color:#111
+    class p,d diamond
+```
+
+### Project pipeline
+
+```mermaid
+flowchart TD
+    d[("data/ + official/<br/>(downloaded from ESA)")]
+    a["src/algorithms.py<br/>YOUR algorithms"]
+    e["official fitness<br/>(udp.fitness)"]
+    m["tasks.py run<br/>Meter: time, memory, states"]
+    c[("results/metrics.csv<br/>history.csv, fronts.json")]
+    p["tasks.py plots<br/>scaling, convergence, Pareto"]
+    r(["Report<br/>README / docs/REPORT.md"])
+    s[("ESA submission JSON<br/>results/submission_*.json")]
+    d --> a
+    a --> e
+    e --> m
+    m --> c
+    c --> p
+    p --> r
+    m --> s
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class a,e,m,p box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class r round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class d,c,s data
+```
 
 ---
 

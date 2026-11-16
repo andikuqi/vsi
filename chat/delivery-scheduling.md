@@ -2,7 +2,7 @@
 
 > **For students using ChatGPT, Gemini or Claude in the browser or the app.**
 > Upload this file to the chat and write: *"Read this file and guide me step by step."*
-> 🇦🇱 Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
+> SQ: Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
 
 Project id (slug): `delivery-scheduling` · Source: https://optimise.esa.int/challenge/spoc-delivery-scheduling/About
 
@@ -99,6 +99,62 @@ Max-min assignment with a scheduling (window ordering) layer — a generalised a
 NP-hard. Typical approach: choose a station order and window boundaries, greedily assign asteroids to the currently
 poorest station/material, then improve with swaps / moves (local search, simulated annealing, tabu) or an ILP on a
 reduced model.
+
+---
+
+## Diagrams
+
+### Problem model
+
+```mermaid
+flowchart TD
+    c[("candidates: asteroid →<br/>station → opportunities")]
+    w["x part 1: 12 station<br/>activity windows"]
+    a["x part 2: 340 × (asteroid,<br/>station, opportunity)"]
+    v{"Windows disjoint, gap ≥ 1 day,<br/>arrivals inside windows?"}
+    m["Mass per station and<br/>material A, B, C"]
+    f(["Maximise the minimum<br/>mass M_min"])
+    c --> a
+    w --> v
+    a --> v
+    v -->|yes| m
+    m --> f
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class w,a,m box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class f round
+    classDef diamond fill:#fff4e5,stroke:#e08a00,color:#111
+    class v diamond
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class c data
+```
+
+### Project pipeline
+
+```mermaid
+flowchart TD
+    d[("data/ + official/<br/>(downloaded from ESA)")]
+    a["src/algorithms.py<br/>YOUR algorithms"]
+    e["official fitness<br/>(udp.fitness)"]
+    m["tasks.py run<br/>Meter: time, memory, states"]
+    c[("results/metrics.csv<br/>history.csv, fronts.json")]
+    p["tasks.py plots<br/>scaling, convergence, Pareto"]
+    r(["Report<br/>README / docs/REPORT.md"])
+    s[("ESA submission JSON<br/>results/submission_*.json")]
+    d --> a
+    a --> e
+    e --> m
+    m --> c
+    c --> p
+    p --> r
+    m --> s
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class a,e,m,p box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class r round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class d,c,s data
+```
 
 ---
 

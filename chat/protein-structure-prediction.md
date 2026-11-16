@@ -2,7 +2,7 @@
 
 > **For students using ChatGPT, Gemini or Claude in the browser or the app.**
 > Upload this file to the chat and write: *"Read this file and guide me step by step."*
-> 🇦🇱 Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
+> SQ: Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
 
 Project id (slug): `protein-structure-prediction` · Source: professor brief (see PROBLEM.md)
 
@@ -89,6 +89,59 @@ Using an existing protein-folding library without your own algorithm and analysi
 ### VSI starter
 `src/generator.py` creates random sequences and maps them to the HP model (hydrophobic/polar) — a common,
 simple energy model you may use or extend.
+
+---
+
+## Diagrams
+
+### Problem model
+
+```mermaid
+flowchart TD
+    s[("Amino-acid sequence<br/>→ H/P string")]
+    f["Fold = self-avoiding walk<br/>on a 2D/3D lattice"]
+    v{"Valid? (no two residues<br/>on the same cell)"}
+    e["Energy: −1 per non-consecutive<br/>H–H neighbour pair"]
+    o(["Minimise energy<br/>(GA, SA, beam, B&B…)"])
+    s --> f
+    f --> v
+    v -->|yes| e
+    v -->|no: repair| f
+    e --> o
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class f,e box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class o round
+    classDef diamond fill:#fff4e5,stroke:#e08a00,color:#111
+    class v diamond
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class s data
+```
+
+### Project pipeline
+
+```mermaid
+flowchart TD
+    d[("src/generator.py<br/>instances small → large")]
+    a["src/algorithms.py<br/>YOUR algorithms"]
+    e["score() / your evaluator<br/>(validity + cost)"]
+    m["tasks.py run<br/>Meter: time, memory, states"]
+    c[("results/metrics.csv<br/>history.csv, fronts.json")]
+    p["tasks.py plots<br/>scaling, convergence, Pareto"]
+    r(["Report<br/>README / docs/REPORT.md"])
+    d --> a
+    a --> e
+    e --> m
+    m --> c
+    c --> p
+    p --> r
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class a,e,m,p box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class r round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class d,c data
+```
 
 ---
 

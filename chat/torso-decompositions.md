@@ -2,7 +2,7 @@
 
 > **For students using ChatGPT, Gemini or Claude in the browser or the app.**
 > Upload this file to the chat and write: *"Read this file and guide me step by step."*
-> 🇦🇱 Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
+> SQ: Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
 
 Project id (slug): `torso-decompositions` · Source: https://optimise.esa.int/challenge/spoc-3-torso-decompositions/About
 
@@ -102,6 +102,62 @@ worse solutions are scored as width 501.
 ### Why it is hard
 Choosing the ordering is equivalent to choosing an elimination ordering; minimising the width of an
 elimination ordering is the treewidth problem, which is NP-hard. Hence heuristics / metaheuristics.
+
+---
+
+## Diagrams
+
+### Problem model
+
+```mermaid
+flowchart TD
+    g[("Graph G (edge list)<br/>vertices 0…n−1")]
+    x["Decision vector<br/>permutation p1…pn + t"]
+    o["Orient edges by the order"]
+    f["Fill-in: connect the<br/>out-neighbours of each vertex"]
+    t["Torso = last n − t vertices"]
+    w["size = n − t (maximise)<br/>width = max out-degree (minimise)"]
+    h(["Up to 20 vectors<br/>scored by hypervolume"])
+    g --> x
+    x --> o
+    o --> f
+    f --> t
+    t --> w
+    w --> h
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class x,o,f,t,w box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class h round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class g data
+```
+
+### Project pipeline
+
+```mermaid
+flowchart TD
+    d[("data/ + official/<br/>(downloaded from ESA)")]
+    a["src/algorithms.py<br/>YOUR algorithms"]
+    e["official fitness<br/>(udp.fitness)"]
+    m["tasks.py run<br/>Meter: time, memory, states"]
+    c[("results/metrics.csv<br/>history.csv, fronts.json")]
+    p["tasks.py plots<br/>scaling, convergence, Pareto"]
+    r(["Report<br/>README / docs/REPORT.md"])
+    s[("ESA submission JSON<br/>results/submission_*.json")]
+    d --> a
+    a --> e
+    e --> m
+    m --> c
+    c --> p
+    p --> r
+    m --> s
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class a,e,m,p box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class r round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class d,c,s data
+```
 
 ---
 

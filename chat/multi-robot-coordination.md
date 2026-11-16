@@ -2,7 +2,7 @@
 
 > **For students using ChatGPT, Gemini or Claude in the browser or the app.**
 > Upload this file to the chat and write: *"Read this file and guide me step by step."*
-> 🇦🇱 Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
+> SQ: Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
 
 Project id (slug): `multi-robot-coordination` · Source: professor brief (see PROBLEM.md)
 
@@ -80,6 +80,64 @@ scaling to larger teams and environments.
 
 ### VSI starter
 `src/generator.py` creates grid maps with static and moving obstacles, robots and delivery tasks.
+
+---
+
+## Diagrams
+
+### Problem model
+
+```mermaid
+flowchart TD
+    w[("Grid: static + moving<br/>obstacles, robots, tasks")]
+    a["Task allocation<br/>(auction by priority)"]
+    p["Path planning per robot<br/>(A* / RRT*)"]
+    c{"Conflict / collision?"}
+    r["Resolve by priority<br/>or re-plan"]
+    m["Move one time step<br/>(learned policy: MADQL / PPO)"]
+    f(["All tasks done:<br/>makespan, collisions, reward"])
+    w --> a
+    a --> p
+    p --> c
+    c -->|yes| r
+    r --> p
+    c -->|no| m
+    m -->|new tasks| a
+    m -->|done| f
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class a,p,r,m box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class f round
+    classDef diamond fill:#fff4e5,stroke:#e08a00,color:#111
+    class c diamond
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class w data
+```
+
+### Project pipeline
+
+```mermaid
+flowchart TD
+    d[("src/generator.py<br/>instances small → large")]
+    a["src/algorithms.py<br/>YOUR algorithms"]
+    e["score() / your evaluator<br/>(validity + cost)"]
+    m["tasks.py run<br/>Meter: time, memory, states"]
+    c[("results/metrics.csv<br/>history.csv, fronts.json")]
+    p["tasks.py plots<br/>scaling, convergence, Pareto"]
+    r(["Report<br/>README / docs/REPORT.md"])
+    d --> a
+    a --> e
+    e --> m
+    m --> c
+    c --> p
+    p --> r
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class a,e,m,p box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class r round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class d,c data
+```
 
 ---
 

@@ -2,7 +2,7 @@
 
 > **For students using ChatGPT, Gemini or Claude in the browser or the app.**
 > Upload this file to the chat and write: *"Read this file and guide me step by step."*
-> 🇦🇱 Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
+> SQ: Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
 
 Project id (slug): `luna-tomato-advertising` · Source: https://optimise.esa.int/challenge/spoc-4-luna-tomato-advertising/About
 
@@ -107,6 +107,64 @@ validate often with `udp.plot_signal(x)` / `udp.plot_orbits(x)`; keep `mse < 0.0
 Choosing which orbits to use is a set-cover-like combinatorial problem (minimise assets covering all pulses of the
 signal), coupled with continuous phase tuning. Natural approaches: greedy cover of the Morse pulses,
 then pruning + local search on phases.
+
+---
+
+## Diagrams
+
+### Problem model
+
+```mermaid
+flowchart TD
+    m[("Target Morse signal<br/>#quot;Tomatoes for sale#quot;")]
+    o[("Orbit databases<br/>DRO · Lyapunov · Axial")]
+    x["x = spacecraft per orbit<br/>(0…5) + their phases"]
+    s["Occultations →<br/>reconstructed signal"]
+    e{"MSE ≤ 0.05?"}
+    f(["Feasible: fewer<br/>spacecraft is better"])
+    i(["Infeasible: lower<br/>MSE is better"])
+    m --> s
+    o --> x
+    x --> s
+    s --> e
+    e -->|yes| f
+    e -->|no| i
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class x,s box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class f,i round
+    classDef diamond fill:#fff4e5,stroke:#e08a00,color:#111
+    class e diamond
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class m,o data
+```
+
+### Project pipeline
+
+```mermaid
+flowchart TD
+    d[("data/ + official/<br/>(downloaded from ESA)")]
+    a["src/algorithms.py<br/>YOUR algorithms"]
+    e["official fitness<br/>(udp.fitness)"]
+    m["tasks.py run<br/>Meter: time, memory, states"]
+    c[("results/metrics.csv<br/>history.csv, fronts.json")]
+    p["tasks.py plots<br/>scaling, convergence, Pareto"]
+    r(["Report<br/>README / docs/REPORT.md"])
+    s[("ESA submission JSON<br/>results/submission_*.json")]
+    d --> a
+    a --> e
+    e --> m
+    m --> c
+    c --> p
+    p --> r
+    m --> s
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class a,e,m,p box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class r round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class d,c,s data
+```
 
 ---
 

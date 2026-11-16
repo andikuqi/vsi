@@ -2,7 +2,7 @@
 
 > **For students using ChatGPT, Gemini or Claude in the browser or the app.**
 > Upload this file to the chat and write: *"Read this file and guide me step by step."*
-> 🇦🇱 Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
+> SQ: Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
 
 Project id (slug): `keplerian-tomato-tsp` · Source: https://optimise.esa.int/challenge/spoc-4-keplerian-tomato-traveling-salesperson/About
 
@@ -105,6 +105,62 @@ Problem ids: `small`, `medium`, `large`.
 A TSP (NP-hard) where edge costs depend on departure time and time of flight, and many edges are infeasible.
 Typical approach: precompute a feasibility graph on a time grid, then a time-dependent nearest-neighbour /
 beam search, improved with 2-opt / or-opt and timing re-optimisation.
+
+---
+
+## Diagrams
+
+### Problem model
+
+```mermaid
+flowchart TD
+    i[("Tomato orbits around<br/>the Moon (a, e, i, Ω, ω, ν)")]
+    x["x = departure times +<br/>times of flight + visit order"]
+    l["Lambert transfer for<br/>each hop → ΔV"]
+    v{"ΔV ≤ limit (or one of<br/>E exceptions)? times in order?"}
+    f(["Minimise mission time<br/>t(N−1) + tof(N−1)"])
+    z(["Infeasible"])
+    i --> x
+    x --> l
+    l --> v
+    v -->|yes| f
+    v -->|no| z
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class x,l box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class f,z round
+    classDef diamond fill:#fff4e5,stroke:#e08a00,color:#111
+    class v diamond
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class i data
+```
+
+### Project pipeline
+
+```mermaid
+flowchart TD
+    d[("data/ + official/<br/>(downloaded from ESA)")]
+    a["src/algorithms.py<br/>YOUR algorithms"]
+    e["official fitness<br/>(udp.fitness)"]
+    m["tasks.py run<br/>Meter: time, memory, states"]
+    c[("results/metrics.csv<br/>history.csv, fronts.json")]
+    p["tasks.py plots<br/>scaling, convergence, Pareto"]
+    r(["Report<br/>README / docs/REPORT.md"])
+    s[("ESA submission JSON<br/>results/submission_*.json")]
+    d --> a
+    a --> e
+    e --> m
+    m --> c
+    c --> p
+    p --> r
+    m --> s
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class a,e,m,p box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class r round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class d,c,s data
+```
 
 ---
 

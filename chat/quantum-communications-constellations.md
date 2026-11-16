@@ -2,7 +2,7 @@
 
 > **For students using ChatGPT, Gemini or Claude in the browser or the app.**
 > Upload this file to the chat and write: *"Read this file and guide me step by step."*
-> 🇦🇱 Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
+> SQ: Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
 
 Project id (slug): `quantum-communications-constellations` · Source: https://optimise.esa.int/challenge/spoc-2-quantum-communications-constellations/About
 
@@ -102,6 +102,62 @@ Python: `from submission_helper import create_submission` (https://api.optimize.
 Mixed integer/continuous, two conflicting objectives, constraints, and an expensive simulation
 (shortest paths in a time-varying graph over 10 years). Typical approach: multi-objective EA (NSGA-II / MOEA/D)
 or a sweep over the integer Walker parameters with continuous local optimisation, plus Pareto filtering.
+
+---
+
+## Diagrams
+
+### Problem model
+
+```mermaid
+flowchart TD
+    r[("100 candidate rover sites")]
+    x["x = 2 Walker constellations<br/>(orbit, S, P, F, η) + 4 rovers"]
+    g["Time-varying link graph<br/>motherships ↔ satellites ↔ rovers"]
+    c{"Constraints: rovers ≥ 3000 km,<br/>satellites ≥ 50 km"}
+    j["J1 = avg shortest path cost<br/>J2 = constellation cost"]
+    h(["Pareto set<br/>scored by hypervolume"])
+    r --> x
+    x --> g
+    g --> c
+    c -->|ok| j
+    j --> h
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class x,g,j box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class h round
+    classDef diamond fill:#fff4e5,stroke:#e08a00,color:#111
+    class c diamond
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class r data
+```
+
+### Project pipeline
+
+```mermaid
+flowchart TD
+    d[("data/ + official/<br/>(downloaded from ESA)")]
+    a["src/algorithms.py<br/>YOUR algorithms"]
+    e["official fitness<br/>(udp.fitness)"]
+    m["tasks.py run<br/>Meter: time, memory, states"]
+    c[("results/metrics.csv<br/>history.csv, fronts.json")]
+    p["tasks.py plots<br/>scaling, convergence, Pareto"]
+    r(["Report<br/>README / docs/REPORT.md"])
+    s[("ESA submission JSON<br/>results/submission_*.json")]
+    d --> a
+    a --> e
+    e --> m
+    m --> c
+    c --> p
+    p --> r
+    m --> s
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class a,e,m,p box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class r round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class d,c,s data
+```
 
 ---
 

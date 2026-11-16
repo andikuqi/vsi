@@ -2,7 +2,7 @@
 
 > **For students using ChatGPT, Gemini or Claude in the browser or the app.**
 > Upload this file to the chat and write: *"Read this file and guide me step by step."*
-> 🇦🇱 Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
+> SQ: Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
 
 Project id (slug): `morphing-rovers` · Source: https://optimise.esa.int/challenge/spoc-2-morphing-rovers/About
 
@@ -104,6 +104,58 @@ Python: `from submission_helper import create_submission` (https://api.optimize.
 ~19 000 continuous parameters, a non-differentiable simulator and an expensive fitness. Typical approaches:
 evolution strategies (CMA-ES / sep-CMA, OpenAI-ES) on a subset of parameters, hand-designed masks + a simple
 controller first, then neuro-evolution.
+
+---
+
+## Diagrams
+
+### Problem model
+
+```mermaid
+flowchart TD
+    d[("6 Mars height maps<br/>30 landing → sample scenarios")]
+    x["x = 4 terrain masks +<br/>neural network weights"]
+    s["Simulate 500 steps:<br/>network steers + switches mode"]
+    v["Speed = mask vs terrain"]
+    f(["Score = time ratio ×<br/>(1 + remaining distance)<br/>mean over scenarios"])
+    d --> x
+    x --> s
+    s --> v
+    v --> f
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class x,s,v box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class f round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class d data
+```
+
+### Project pipeline
+
+```mermaid
+flowchart TD
+    d[("data/ + official/<br/>(downloaded from ESA)")]
+    a["src/algorithms.py<br/>YOUR algorithms"]
+    e["official fitness<br/>(udp.fitness)"]
+    m["tasks.py run<br/>Meter: time, memory, states"]
+    c[("results/metrics.csv<br/>history.csv, fronts.json")]
+    p["tasks.py plots<br/>scaling, convergence, Pareto"]
+    r(["Report<br/>README / docs/REPORT.md"])
+    s[("ESA submission JSON<br/>results/submission_*.json")]
+    d --> a
+    a --> e
+    e --> m
+    m --> c
+    c --> p
+    p --> r
+    m --> s
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class a,e,m,p box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class r round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class d,c,s data
+```
 
 ---
 

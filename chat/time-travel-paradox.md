@@ -2,7 +2,7 @@
 
 > **For students using ChatGPT, Gemini or Claude in the browser or the app.**
 > Upload this file to the chat and write: *"Read this file and guide me step by step."*
-> 🇦🇱 Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
+> SQ: Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
 
 Project id (slug): `time-travel-paradox` · Source: professor brief (see PROBLEM.md)
 
@@ -82,6 +82,61 @@ in general) — justify exact methods for small inputs and heuristics/pruning fo
 
 ### VSI starter
 `src/generator.py` creates random timelines (forward DAG + time-travel back edges + costs) with a known number of paradoxes.
+
+---
+
+## Diagrams
+
+### Problem model
+
+```mermaid
+flowchart TD
+    e[("Events + causal edges<br/>+ time-travel edges")]
+    g["Directed timeline graph"]
+    c{"Cycle? (DFS / SCC)"}
+    p["Paradox: events +<br/>responsible edge"]
+    r["Repair: remove / modify /<br/>delay with costs"]
+    o(["Consistent timeline<br/>at minimum cost"])
+    e --> g
+    g --> c
+    c -->|yes| p
+    p --> r
+    r -->|re-check| g
+    c -->|no| o
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class g,p,r box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class o round
+    classDef diamond fill:#fff4e5,stroke:#e08a00,color:#111
+    class c diamond
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class e data
+```
+
+### Project pipeline
+
+```mermaid
+flowchart TD
+    d[("src/generator.py<br/>instances small → large")]
+    a["src/algorithms.py<br/>YOUR algorithms"]
+    e["score() / your evaluator<br/>(validity + cost)"]
+    m["tasks.py run<br/>Meter: time, memory, states"]
+    c[("results/metrics.csv<br/>history.csv, fronts.json")]
+    p["tasks.py plots<br/>scaling, convergence, Pareto"]
+    r(["Report<br/>README / docs/REPORT.md"])
+    d --> a
+    a --> e
+    e --> m
+    m --> c
+    c --> p
+    p --> r
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class a,e,m,p box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class r round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class d,c data
+```
 
 ---
 

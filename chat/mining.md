@@ -2,7 +2,7 @@
 
 > **For students using ChatGPT, Gemini or Claude in the browser or the app.**
 > Upload this file to the chat and write: *"Read this file and guide me step by step."*
-> 🇦🇱 Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
+> SQ: Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
 
 Project id (slug): `mining` · Source: https://optimise.esa.int/challenge/spoc-mining/About
 
@@ -100,6 +100,63 @@ Python: `from submission_helper import create_submission` (https://api.optimize.
 A time-dependent orienteering / prize-collecting TSP with a resource (propellant) constraint and a max-min objective,
 over 10 000 nodes whose transfer costs change with time. Typical approach: precompute cheap transfer candidates
 (nearby orbits), greedy / beam search choosing the next asteroid by material need and ΔV, then local search on the route.
+
+---
+
+## Diagrams
+
+### Problem model
+
+```mermaid
+flowchart TD
+    c[("10 000 asteroids:<br/>orbit, mass, material")]
+    x["x = arrival times +<br/>stay times + asteroid order"]
+    t["Lambert transfer<br/>ΔV from the tank"]
+    p{"Propellant left?"}
+    s["Stay: prepare material or<br/>refuel (1/30 per day)"]
+    f(["Maximise min(m0, m1, m2)<br/>within 1827 days"])
+    c --> x
+    x --> t
+    t --> p
+    p -->|yes| s
+    s -->|next asteroid| t
+    p -->|no / end| f
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class x,t,s box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class f round
+    classDef diamond fill:#fff4e5,stroke:#e08a00,color:#111
+    class p diamond
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class c data
+```
+
+### Project pipeline
+
+```mermaid
+flowchart TD
+    d[("data/ + official/<br/>(downloaded from ESA)")]
+    a["src/algorithms.py<br/>YOUR algorithms"]
+    e["official fitness<br/>(udp.fitness)"]
+    m["tasks.py run<br/>Meter: time, memory, states"]
+    c[("results/metrics.csv<br/>history.csv, fronts.json")]
+    p["tasks.py plots<br/>scaling, convergence, Pareto"]
+    r(["Report<br/>README / docs/REPORT.md"])
+    s[("ESA submission JSON<br/>results/submission_*.json")]
+    d --> a
+    a --> e
+    e --> m
+    m --> c
+    c --> p
+    p --> r
+    m --> s
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class a,e,m,p box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class r round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class d,c,s data
+```
 
 ---
 

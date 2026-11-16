@@ -2,7 +2,7 @@
 
 > **For students using ChatGPT, Gemini or Claude in the browser or the app.**
 > Upload this file to the chat and write: *"Read this file and guide me step by step."*
-> 🇦🇱 Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
+> SQ: Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
 
 Project id (slug): `interferometric-mission` · Source: https://optimise.esa.int/challenge/spoc-3-interferometric-mission/About
 
@@ -103,6 +103,60 @@ Problem ids: `tiny-observatory-in-dro`, `large-observatory-in-dro`, `large-obser
 Maximising distinct pairwise distances is a Golomb-ruler-type combinatorial problem (hard even in 1D), here coupled
 with orbital dynamics that move the pattern over time. Each evaluation needs numerical propagation, so evaluations
 are expensive: use a fast surrogate (e.g. count baselines at t = 0 only) before the official fitness.
+
+---
+
+## Diagrams
+
+### Problem model
+
+```mermaid
+flowchart TD
+    m[("Mothership orbit<br/>(DRO or halo)")]
+    x["x = relative position +<br/>velocity of N satellites"]
+    p["Propagate orbits:<br/>t = 0, 1, 2 periods"]
+    g["Project on XY, XZ, YZ<br/>and snap to a grid"]
+    b["Count unique baselines<br/>→ fill factors"]
+    f(["f = −max over times of<br/>sum of fill factors"])
+    m --> x
+    x --> p
+    p --> g
+    g --> b
+    b --> f
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class x,p,g,b box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class f round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class m data
+```
+
+### Project pipeline
+
+```mermaid
+flowchart TD
+    d[("data/ + official/<br/>(downloaded from ESA)")]
+    a["src/algorithms.py<br/>YOUR algorithms"]
+    e["official fitness<br/>(udp.fitness)"]
+    m["tasks.py run<br/>Meter: time, memory, states"]
+    c[("results/metrics.csv<br/>history.csv, fronts.json")]
+    p["tasks.py plots<br/>scaling, convergence, Pareto"]
+    r(["Report<br/>README / docs/REPORT.md"])
+    s[("ESA submission JSON<br/>results/submission_*.json")]
+    d --> a
+    a --> e
+    e --> m
+    m --> c
+    c --> p
+    p --> r
+    m --> s
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class a,e,m,p box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class r round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class d,c,s data
+```
 
 ---
 

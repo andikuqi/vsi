@@ -2,7 +2,7 @@
 
 > **For students using ChatGPT, Gemini or Claude in the browser or the app.**
 > Upload this file to the chat and write: *"Read this file and guide me step by step."*
-> 🇦🇱 Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
+> SQ: Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
 
 Project id (slug): `luna-tomato-logistics` · Source: https://optimise.esa.int/challenge/spoc-4-luna-tomato-logistics/About
 
@@ -105,6 +105,60 @@ Problem ids: `matching-i`, `matching-ii`, `trajectory-matching`.
 Maximum-weight 3-dimensional matching is **NP-hard** (one of Karp's problems; 2D matching is polynomial).
 Classic course material: greedy by weight, local search with swaps, LP relaxation / Lagrangian bounds,
 reduction to 2D matching as a heuristic. The Advanced problem adds expensive trajectory optimisation.
+
+---
+
+## Diagrams
+
+### Problem model
+
+```mermaid
+flowchart TD
+    t[("Transfers (e, l, d, weight)<br/>Earth orbit → Moon orbit → destination")]
+    x["x = 0/1 per transfer"]
+    v{"Every e, l, d used<br/>at most once?"}
+    w(["Fitness = total weight<br/>(maximise)"])
+    z(["Fitness = 0 (invalid)"])
+    t --> x
+    x --> v
+    v -->|yes| w
+    v -->|no| z
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class x box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class w,z round
+    classDef diamond fill:#fff4e5,stroke:#e08a00,color:#111
+    class v diamond
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class t data
+```
+
+### Project pipeline
+
+```mermaid
+flowchart TD
+    d[("data/ + official/<br/>(downloaded from ESA)")]
+    a["src/algorithms.py<br/>YOUR algorithms"]
+    e["official fitness<br/>(udp.fitness)"]
+    m["tasks.py run<br/>Meter: time, memory, states"]
+    c[("results/metrics.csv<br/>history.csv, fronts.json")]
+    p["tasks.py plots<br/>scaling, convergence, Pareto"]
+    r(["Report<br/>README / docs/REPORT.md"])
+    s[("ESA submission JSON<br/>results/submission_*.json")]
+    d --> a
+    a --> e
+    e --> m
+    m --> c
+    c --> p
+    p --> r
+    m --> s
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class a,e,m,p box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class r round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class d,c,s data
+```
 
 ---
 

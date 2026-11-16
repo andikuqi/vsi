@@ -2,7 +2,7 @@
 
 > **For students using ChatGPT, Gemini or Claude in the browser or the app.**
 > Upload this file to the chat and write: *"Read this file and guide me step by step."*
-> 🇦🇱 Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
+> SQ: Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
 
 Project id (slug): `programmable-cubes` · Source: https://optimise.esa.int/challenge/spoc-3-programmable-cubes/About
 
@@ -114,6 +114,64 @@ Modular-robot reconfiguration: the state space is all connected shapes of the en
 (connectivity + collisions) and later moves depend on earlier ones. Shortest reconfiguration is a search/planning
 problem far too large for exhaustive search: use heuristic search (greedy matching of cubes to targets, BFS/A* for
 single-cube paths, local search on the move sequence).
+
+---
+
+## Diagrams
+
+### Problem model
+
+```mermaid
+flowchart TD
+    i[("Initial cube ensemble<br/>+ target shape")]
+    x["x = [cube, move, cube,<br/>move, …, −1]"]
+    v{"Move legal?<br/>(connected, no collision)"}
+    a["Apply pivot move"]
+    c["C(x) = cubes on correct<br/>target cells"]
+    f(["Fitness: more correct<br/>cubes, fewer moves"])
+    i --> x
+    x -->|next command| v
+    v -->|yes| a
+    v -->|skip| x
+    a -->|next| x
+    a -->|after −1| c
+    c --> f
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class x,a,c box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class f round
+    classDef diamond fill:#fff4e5,stroke:#e08a00,color:#111
+    class v diamond
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class i data
+```
+
+### Project pipeline
+
+```mermaid
+flowchart TD
+    d[("data/ + official/<br/>(downloaded from ESA)")]
+    a["src/algorithms.py<br/>YOUR algorithms"]
+    e["official fitness<br/>(udp.fitness)"]
+    m["tasks.py run<br/>Meter: time, memory, states"]
+    c[("results/metrics.csv<br/>history.csv, fronts.json")]
+    p["tasks.py plots<br/>scaling, convergence, Pareto"]
+    r(["Report<br/>README / docs/REPORT.md"])
+    s[("ESA submission JSON<br/>results/submission_*.json")]
+    d --> a
+    a --> e
+    e --> m
+    m --> c
+    c --> p
+    p --> r
+    m --> s
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class a,e,m,p box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class r round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class d,c,s data
+```
 
 ---
 

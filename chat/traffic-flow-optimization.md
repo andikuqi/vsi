@@ -2,7 +2,7 @@
 
 > **For students using ChatGPT, Gemini or Claude in the browser or the app.**
 > Upload this file to the chat and write: *"Read this file and guide me step by step."*
-> 🇦🇱 Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
+> SQ: Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
 
 Project id (slug): `traffic-flow-optimization` · Source: professor brief (see PROBLEM.md)
 
@@ -76,6 +76,61 @@ effect of congestion updates, scaling with grid size.
 
 ### VSI starter
 `src/generator.py` builds city grids with travel delays and random congestion updates.
+
+---
+
+## Diagrams
+
+### Problem model
+
+```mermaid
+flowchart TD
+    g[("City grid: intersections,<br/>roads with delays")]
+    q["Query: source → target"]
+    d["Dijkstra / A*<br/>(heuristic: free-flow time)"]
+    r["Fastest route +<br/>travel time"]
+    u{"Congestion update?"}
+    o(["Report route"])
+    g --> q
+    q --> d
+    d --> r
+    r --> u
+    u -->|yes: new weights| d
+    u -->|no| o
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class q,d,r box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class o round
+    classDef diamond fill:#fff4e5,stroke:#e08a00,color:#111
+    class u diamond
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class g data
+```
+
+### Project pipeline
+
+```mermaid
+flowchart TD
+    d[("src/generator.py<br/>instances small → large")]
+    a["src/algorithms.py<br/>YOUR algorithms"]
+    e["score() / your evaluator<br/>(validity + cost)"]
+    m["tasks.py run<br/>Meter: time, memory, states"]
+    c[("results/metrics.csv<br/>history.csv, fronts.json")]
+    p["tasks.py plots<br/>scaling, convergence, Pareto"]
+    r(["Report<br/>README / docs/REPORT.md"])
+    d --> a
+    a --> e
+    e --> m
+    m --> c
+    c --> p
+    p --> r
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class a,e,m,p box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class r round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class d,c data
+```
 
 ---
 

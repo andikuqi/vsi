@@ -2,7 +2,7 @@
 
 > **For students using ChatGPT, Gemini or Claude in the browser or the app.**
 > Upload this file to the chat and write: *"Read this file and guide me step by step."*
-> 🇦🇱 Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
+> SQ: Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
 
 Project id (slug): `chronos-nexus` · Source: professor brief (see PROBLEM.md)
 
@@ -95,6 +95,65 @@ Modular source code with docs and tests; **technical report as the GitHub README
 
 ### VSI starter
 `src/generator.py` builds random galaxies (planets, routes, ships, missions, events) at the four required sizes.
+
+---
+
+## Diagrams
+
+### Problem model
+
+```mermaid
+flowchart TD
+    g[("Galaxy graph: planets,<br/>routes, ships, missions")]
+    r["Multi-objective routing<br/>(time, fuel, risk)"]
+    a["Resource allocation<br/>(min-cost flow)"]
+    s["Mission scheduling"]
+    i["Infrastructure under budget<br/>(knapsack)"]
+    e{"Events: blocked routes,<br/>pirates…"}
+    p(["Re-plan → stable,<br/>efficient civilisation"])
+    g --> r
+    g --> a
+    g --> s
+    g --> i
+    r --> e
+    a --> e
+    s --> e
+    i --> e
+    e --> p
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class r,a,s,i box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class p round
+    classDef diamond fill:#fff4e5,stroke:#e08a00,color:#111
+    class e diamond
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class g data
+```
+
+### Project pipeline
+
+```mermaid
+flowchart TD
+    d[("src/generator.py<br/>instances small → large")]
+    a["src/algorithms.py<br/>YOUR algorithms"]
+    e["score() / your evaluator<br/>(validity + cost)"]
+    m["tasks.py run<br/>Meter: time, memory, states"]
+    c[("results/metrics.csv<br/>history.csv, fronts.json")]
+    p["tasks.py plots<br/>scaling, convergence, Pareto"]
+    r(["Report<br/>README / docs/REPORT.md"])
+    d --> a
+    a --> e
+    e --> m
+    m --> c
+    c --> p
+    p --> r
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class a,e,m,p box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class r round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class d,c data
+```
 
 ---
 

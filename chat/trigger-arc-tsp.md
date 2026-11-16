@@ -2,7 +2,7 @@
 
 > **For students using ChatGPT, Gemini or Claude in the browser or the app.**
 > Upload this file to the chat and write: *"Read this file and guide me step by step."*
-> 🇦🇱 Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
+> SQ: Ngarkoje këtë skedar në chat dhe shkruaj: *"Lexo këtë skedar dhe më udhëhiq hap pas hapi."*
 
 Project id (slug): `trigger-arc-tsp` · Source: ask the professor
 
@@ -62,6 +62,56 @@ instances and heuristics/metaheuristics are needed for large ones.
 
 ### VSI starter
 Generic template (measurement, experiments, plots, report). Add a loader once you have the official instances.
+
+---
+
+## Diagrams
+
+### Problem model
+
+```mermaid
+flowchart TD
+    g[("Directed graph with arc costs<br/>+ trigger rules")]
+    t["Tour visiting every node"]
+    r["Traversing a trigger arc<br/>changes other arc costs"]
+    c["Tour cost with<br/>all trigger effects"]
+    f(["Minimise tour cost"])
+    g --> t
+    t --> r
+    r --> c
+    c --> f
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class t,r,c box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class f round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class g data
+```
+
+### Project pipeline
+
+```mermaid
+flowchart TD
+    d[("src/generator.py<br/>instances small → large")]
+    a["src/algorithms.py<br/>YOUR algorithms"]
+    e["score() / your evaluator<br/>(validity + cost)"]
+    m["tasks.py run<br/>Meter: time, memory, states"]
+    c[("results/metrics.csv<br/>history.csv, fronts.json")]
+    p["tasks.py plots<br/>scaling, convergence, Pareto"]
+    r(["Report<br/>README / docs/REPORT.md"])
+    d --> a
+    a --> e
+    e --> m
+    m --> c
+    c --> p
+    p --> r
+    classDef box fill:#e8f0fe,stroke:#3b6fd8,color:#111
+    class a,e,m,p box
+    classDef round fill:#e6f6ec,stroke:#2e8b57,color:#111
+    class r round
+    classDef data fill:#f3e8fd,stroke:#7b3fc4,color:#111
+    class d,c data
+```
 
 ---
 
