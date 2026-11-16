@@ -16,6 +16,7 @@ python tasks.py check     # progress + next step
 ## Report
 
 ### 1. Problem definition
+<!-- Ready diagrams of the problem and of classic algorithms: docs/DIAGRAMS.md (pictures in docs/diagrams/). -->
 <!-- Formal definition in your own words: input, output, constraints, objective. -->
 
 ### 2. Complexity of the problem
@@ -42,3 +43,10 @@ _No results yet: run `python tasks.py start`._
 ### 9. Limitations & future work
 
 ### 10. Conclusions
+
+### Tools used
+- **VSI** (https://github.com/andikuqi/vsi): project structure, official data download, measuring (time, memory,
+  states), experiment runner, charts, report skeleton, and *template* diagrams (pipeline, problem model,
+  generic algorithm flowcharts).
+- **My own work:** <!-- list it: the algorithms, their design and diagrams, the analysis, the experiments chosen, the conclusions -->
+- AI assistant(s) used: <!-- e.g. Codex / Copilot / ChatGPT, and what for -->
