@@ -34,7 +34,10 @@ def start(_):
 
 
 def setup(_):
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
+    if subprocess.call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"]) != 0:
+        print("\nInstall failed. If your system Python blocks installs (Ubuntu, Debian, Homebrew macOS), run "
+              "`python3 tasks.py start`: it creates a .venv for this project automatically.")
+        sys.exit(1)
 
 
 def data(_):
