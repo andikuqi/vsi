@@ -1,4 +1,4 @@
-# VSI — Void Solving Infrastructure
+# VSI
 
 **Ready-made setup for Algorithm Design & Analysis projects. Your AI does the work around your algorithm.**
 **Gati për projektet e Dizajnimit dhe Analizës së Algoritmeve. AI-ja jote bën punën rreth algoritmit tënd.**
@@ -7,7 +7,7 @@ Works on / Punon në: **Windows · macOS · Linux** — Python 3.10+
 
 ---
 
-## 🇦🇱 Si ta përdorësh
+## SQ · Si ta përdorësh
 
 **A) Me agjent në VS Code** (Codex, Copilot, Gemini, Claude Code, Cursor…)
 
@@ -30,7 +30,7 @@ AI-ja të tregon saktë cilat komanda t'i kopjosh në terminal dhe pret përgjig
 
 ---
 
-## 🇬🇧 How to use it
+## EN · How to use it
 
 **A) With an agent in VS Code** (Codex, Copilot, Gemini, Claude Code, Cursor…)
 
@@ -95,6 +95,8 @@ your-project/
 ├── docs/
 │   ├── PROBLEM.md     📄 the problem / problemi
 │   ├── REQUIREMENTS.md ☑️ checklist / lista e kërkesave
+│   ├── DIAGRAMS.md    🧭 ready diagrams: pipeline, problem, algorithms / diagrame gati
+│   ├── diagrams/      🖼️ the same as pictures + your instance / si figura + instanca jote
 │   └── PLAN.md  DECISIONS.md
 ├── src/
 │   ├── algorithms.py  ✍️ YOUR ALGORITHMS / ALGORITMET E TUA
@@ -113,14 +115,14 @@ your-project/
 
 ## ❓ Good to know / Mirë ta dish
 
-| 🇦🇱 | 🇬🇧 |
+| SQ | EN |
 |---|---|
 | Skedarët e tu nuk fshihen dhe nuk ndryshohen. | Your own files are never deleted or changed. |
 | Mos e ndrysho folderin `vsi`. | Don't edit the `vsi` folder. |
 | Ke tashmë `AGENTS.md`? Mos e zëvendëso: VSI i shton udhëzimet e veta në fund të tij. | Already have an `AGENTS.md`? Keep yours: VSI adds its instructions at the end. |
 | VSI të jep bazën, jo zgjidhjen. Algoritmin e bën ti, dhe duhet ta kuptosh. | VSI gives you the base, not the solution. The algorithm is yours, and you must understand it. |
 
-| Mark | 🇦🇱 | 🇬🇧 |
+| Mark | SQ | EN |
 |:-:|---|---|
 | ✅ | Problemi është kontrolluar nga burimi zyrtar. Gati për punë. | Problem checked against the official source. Ready to work. |
 | ⚠️ | Problemi nuk është kontrolluar ende. Agjenti duhet ta lexojë fillimisht faqen zyrtare (ose pyete profesorin). | Problem not checked yet. Your agent must read the official page first (or ask your professor). |
