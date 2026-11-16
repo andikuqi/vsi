@@ -70,7 +70,8 @@ def _data(root: Path, man: dict) -> None:
             detail = f"{len(files) - n_code} data file(s) in data/" + (f" + {n_code} official evaluation file(s) in official/" if n_code else "")
             _say(OK, "Data / Të dhënat", detail)
         except Exception as exc:  # network problems must not stop the rest
-            _say(WARN, "Data / Të dhënat", f"download failed ({exc}); retry with `python tasks.py data`")
+            hint = "" if isinstance(exc, data.DownloadError) else "; retry with `python tasks.py data`"
+            _say(WARN, "Data / Të dhënat", f"{exc}{hint}")
     elif man.get("kind") == "esa":
         _say(SKIP, "Data / Të dhënat", "nothing to download for this challenge")
     elif "data" in progress.facts(root):
@@ -154,6 +155,19 @@ def _charts(root: Path) -> None:
         _say(WARN, "Charts / Grafikët", f"{type(exc).__name__}: {exc}")
 
 
+def _pictures(root: Path) -> None:
+    label = "Diagrams / Diagramet"
+    try:
+        from . import visualize
+        with contextlib.redirect_stdout(io.StringIO()):
+            pictures = visualize.main(root)
+        n = len(list((root / "docs" / "diagrams").glob("*.png")))
+        _say(OK, label, f"{n} picture(s) in docs/diagrams/ + docs/DIAGRAMS.md"
+             + (f" (incl. {len(pictures)} of the instance)" if pictures else ""))
+    except Exception as exc:
+        _say(WARN, label, f"{type(exc).__name__}: {exc}")
+
+
 def main(root: str | Path = ".") -> int:
     root = Path(root).resolve()
     man = data.manifest(root)
@@ -172,6 +186,7 @@ def main(root: str | Path = ".") -> int:
     _tests(root)
     _first_run(root, man)
     _charts(root)
+    _pictures(root)
 
     req = root / "docs" / "REQUIREMENTS.md"
     if req.exists():
