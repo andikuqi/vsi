@@ -11,6 +11,7 @@ import contextlib
 import importlib
 import importlib.util
 import io
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -24,14 +25,41 @@ def _say(icon: str, label: str, detail: str = "") -> None:
     print(f"{icon} {label:<31} {detail}")
 
 
-def _packages(root: Path) -> None:
+def _in_venv() -> bool:
+    return sys.prefix != sys.base_prefix
+
+
+def venv_python(root: Path) -> Path:
+    return root / ".venv" / ("Scripts/python.exe" if sys.platform == "win32" else "bin/python")
+
+
+def _pip_install(args: list[str]) -> int:
+    if os.environ.get("VSI_SIMULATE_BLOCKED_PIP") and not _in_venv():   # tests: behave like Ubuntu / Homebrew
+        return 1
+    return subprocess.call([sys.executable, "-m", "pip", "install", "-q", *args])
+
+
+def _packages(root: Path) -> Path | None:
+    """Install pytest + matplotlib. If the system Python refuses installs (PEP 668: Ubuntu, Debian, Homebrew
+    macOS, ...), create .venv in the project and return its Python, so start can continue inside it."""
     missing = [m for m in ("pytest", "matplotlib") if importlib.util.find_spec(m) is None]
     if not missing:
         _say(OK, "Packages / Paketat", "pytest, matplotlib")
-        return
-    code = subprocess.call([sys.executable, "-m", "pip", "install", "-q", "-r", str(root / "requirements.txt")])
-    importlib.invalidate_caches()
-    _say(OK if code == 0 else WARN, "Packages / Paketat", "installed" if code == 0 else "pip install failed — run `python tasks.py setup`")
+        return None
+    if _pip_install(["-r", str(root / "requirements.txt")]) == 0:
+        importlib.invalidate_caches()
+        _say(OK, "Packages / Paketat", "installed")
+        return None
+    if _in_venv():
+        _say(WARN, "Packages / Paketat", "pip install failed — check your internet, then `python tasks.py setup`")
+        return None
+    py = venv_python(root)
+    if not py.exists() and subprocess.call([sys.executable, "-m", "venv", str(root / ".venv")]) != 0:
+        _say(WARN, "Packages / Paketat", "this Python blocks installs and cannot create .venv "
+             "(Ubuntu/Debian: `sudo apt install python3-venv`, then run start again)")
+        return None
+    _say(OK, "Packages / Paketat", "your system Python blocks installs -> created .venv, continuing inside it")
+    return py
 
 
 def _data(root: Path, man: dict) -> None:
@@ -130,7 +158,15 @@ def main(root: str | Path = ".") -> int:
     root = Path(root).resolve()
     man = data.manifest(root)
     print(f"\nVSI start — {man.get('title', root.name)}\n")
-    _packages(root)
+    venv_py = _packages(root)
+    if venv_py:   # continue the whole start inside the new .venv
+        sys.stdout.flush()
+        code = subprocess.call([str(venv_py), str(root / "tasks.py"), "start"], cwd=root)
+        activate = r".venv\Scripts\activate" if sys.platform == "win32" else "source .venv/bin/activate"
+        print()
+        print(f"From now on run `{activate}` once per terminal before `python tasks.py ...` "
+              "(your AI agent can do it for you).")
+        return code
     _data(root, man)
     _official_packages(root)
     _tests(root)
